@@ -31,7 +31,6 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
-    lifespan=lifespan,
 )
 
 # Enable CORS for cross-origin requests
@@ -50,8 +49,18 @@ app.include_router(api_router, prefix="/api", tags=["Scoring & Analysis"])
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
+from fastapi.responses import FileResponse, HTMLResponse, Response
 
-from fastapi.responses import FileResponse, HTMLResponse
+@app.get("/static/{file_path:path}", include_in_schema=False)
+async def serve_static_direct(file_path: str):
+    """Fallback handler to serve CSS/JS on serverless environments."""
+    target = STATIC_DIR / file_path
+    if target.exists() and target.is_file():
+        media_type = "text/css" if file_path.endswith(".css") else "application/javascript" if file_path.endswith(".js") else "application/octet-stream"
+        return Response(content=target.read_bytes(), media_type=media_type)
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail="File not found")
+
 
 @app.get("/", include_in_schema=False)
 async def serve_index():

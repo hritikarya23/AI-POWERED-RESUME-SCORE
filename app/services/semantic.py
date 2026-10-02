@@ -34,7 +34,14 @@ class SemanticMatcher:
         return cls._instance
 
     def _initialize_model(self) -> None:
-        """Attempt to load SentenceTransformer model; fallback to TF-IDF on error."""
+        """Attempt to load SentenceTransformer model; fallback to TF-IDF on error or serverless."""
+        import os
+        if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+            logger.info("Serverless environment detected (Vercel). Using fast in-memory TF-IDF vectorizer.")
+            self.model = None
+            self.is_neural = False
+            return
+
         try:
             from sentence_transformers import SentenceTransformer
             logger.info("Loading SentenceTransformer model '%s'...", self.model_name)
