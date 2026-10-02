@@ -96,11 +96,13 @@ def health_endpoint():
     }
 
 
-@app.get("/api/index.py")
+@app.api_route("/api/index.py", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+@app.api_route("/api/index", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 def index_fallback():
     return health_endpoint()
 
-
-# Aliases for all possible Vercel entrypoint discovery patterns
-application = app
-handler = app
+# Note: Do NOT define 'handler = app' or 'application = app'.
+# Vercel's Python runtime checks:
+# if hasattr(module, 'handler') and issubclass(module.handler, BaseHTTPRequestHandler)
+# Setting handler = app causes `TypeError: issubclass() arg 1 must be a class`!
+# Exporting only 'app' allows Vercel to cleanly detect FastAPI as an ASGI application.

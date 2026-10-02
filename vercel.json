@@ -2,7 +2,8 @@
   "version": 2,
   "functions": {
     "api/index.py": {
-      "includeFiles": "api/app/**"
+      "includeFiles": "api/app/**",
+      "maxDuration": 60
     }
   },
   "rewrites": [
