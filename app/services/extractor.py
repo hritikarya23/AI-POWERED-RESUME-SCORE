@@ -156,8 +156,25 @@ def extract_from_txt(file_bytes: bytes) -> Dict[str, Any]:
         raise ExtractionError(f"Failed to process text file: {str(e)}")
 
 
-def extract_from_image(file_bytes: bytes) -> Dict[str, Any]:
-    """Extract text from an image (JPG, JPEG, PNG, WEBP, BMP) using EasyOCR."""
+def extract_from_image(file_bytes: bytes, filename: str = "resume.jpg") -> Dict[str, Any]:
+    """Extract text from an image (JPG, JPEG, PNG, WEBP, BMP) using Groq Vision or local fallback."""
+    # First priority: Fast & accurate Groq Vision if API key is present
+    try:
+        from app.services.groq_service import is_groq_available, extract_text_from_image_groq
+        if is_groq_available():
+            text = extract_text_from_image_groq(file_bytes, filename)
+            if text and len(text.strip()) > 15:
+                cleaned = clean_extracted_text(text)
+                words = cleaned.split()
+                return {
+                    "text": cleaned,
+                    "page_count": 1,
+                    "word_count": len(words),
+                    "char_count": len(cleaned),
+                }
+    except Exception:
+        pass
+
     try:
         from PIL import Image
         import numpy as np
@@ -215,14 +232,14 @@ def extract_text_from_file(file_bytes: bytes, filename: str) -> Dict[str, Any]:
     elif lower_name.endswith(".txt") or lower_name.endswith(".md"):
         data = extract_from_txt(file_bytes)
     elif any(lower_name.endswith(ext) for ext in IMAGE_EXTENSIONS):
-        data = extract_from_image(file_bytes)
+        data = extract_from_image(file_bytes, filename)
     else:
         # Fallback: attempt PDF, then Image, then text
         try:
             data = extract_from_pdf(file_bytes)
         except Exception:
             try:
-                data = extract_from_image(file_bytes)
+                data = extract_from_image(file_bytes, filename)
             except Exception:
                 try:
                     data = extract_from_txt(file_bytes)

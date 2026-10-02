@@ -764,6 +764,86 @@ def get_company_intelligence(
     key = normalize_company_key(company_name)
     is_fresher = experience_type.lower() == "fresher" or years_of_experience < 1.5
 
+    # Check if Groq API is available for live real-time global intelligence
+    try:
+        from app.services.groq_service import is_groq_available, fetch_company_intelligence_groq
+        if is_groq_available():
+            groq_info = fetch_company_intelligence_groq(
+                company_name=company_name,
+                experience_type=experience_type,
+                years_of_experience=years_of_experience,
+                target_role=target_role,
+            )
+            if groq_info and isinstance(groq_info, dict):
+                # Map Groq result into CompanyProfile
+                exam_rounds = []
+                for i, r in enumerate(groq_info.get("interview_rounds", [])):
+                    exam_rounds.append(
+                        ExamRound(
+                            round_number=r.get("round_number", i + 1),
+                            name=r.get("round_name", f"Round {i + 1}"),
+                            format=r.get("round_type", "Technical Evaluation"),
+                            duration=f"{r.get('duration_minutes', 60)} Minutes",
+                            focus_areas=r.get("focus_areas", ["Problem Solving", "Core CS"]),
+                            description=f"Evaluation Criteria: {r.get('evaluation_criteria', 'Evaluated on technical excellence.')}. Questions: {', '.join(r.get('typical_questions', [])[:2])}",
+                        )
+                    )
+                
+                project_pts = []
+                for p in groq_info.get("expected_coding_projects", []):
+                    techs = ", ".join(p.get("suggested_tech_stack", []))
+                    project_pts.append(f"{p.get('title', 'Project')}: ({p.get('complexity', 'Advanced')}) using [{techs}]. {p.get('why_it_impresses', '')}")
+
+                # Build dynamic JD from Groq info
+                el = groq_info.get("eligibility_criteria", {})
+                target_jd = f"""
+Company: {groq_info.get('company_name', company_name)}
+Role: {target_role}
+Industry: {groq_info.get('industry', 'Technology')}
+Hiring Bar: {groq_info.get('hiring_bar', 'High')} | Difficulty: {groq_info.get('difficulty_level', 'Hard')}
+
+Eligibility:
+• Degrees: {', '.join(el.get('degrees_accepted', ['B.Tech/BE/MCA']))}
+• Minimum Marks: {el.get('minimum_cgpa_or_percentage', '60% or 6.5 CGPA')}
+• Experience: {el.get('experience_required', 'Fresher' if is_fresher else f'{years_of_experience} yrs')}
+• Backlogs: {el.get('backlog_policy', 'No active backlogs')}
+
+Key Prerequisites:
+{chr(10).join(['• ' + req for req in el.get('key_prerequisites', [])])}
+""".strip()
+
+                return CompanyProfile(
+                    company_name=groq_info.get("company_name", company_name),
+                    industry=groq_info.get("industry", "Technology"),
+                    tier=groq_info.get("hiring_bar", "Tier-1 / High Growth"),
+                    headquarters=groq_info.get("headquarters", "Global"),
+                    overview=f"Hiring Bar: {groq_info.get('hiring_bar', 'High')}. Exam Platform: {groq_info.get('exam_pattern', {}).get('platform', 'Online Coding Platform')}",
+                    target_role=target_role,
+                    experience_level_assumed="Fresher / Entry Level" if is_fresher else f"Experienced ({years_of_experience} yrs)",
+                    exam_pattern=exam_rounds if exam_rounds else [
+                        ExamRound(
+                            round_number=1,
+                            name="Online Assessment / Coding Screen",
+                            format=groq_info.get("exam_pattern", {}).get("platform", "Coding Platform"),
+                            duration=groq_info.get("exam_pattern", {}).get("total_duration", "90 Minutes"),
+                            focus_areas=["DSA", "Problem Solving"],
+                            description="Algorithmic problem solving and domain technical screening.",
+                        )
+                    ],
+                    eligibility_criteria=el,
+                    coding_expectations={
+                        "dsa_difficulty": groq_info.get("difficulty_level", "Medium-Hard"),
+                        "primary_topics": ["Data Structures", "Algorithms", "System Architecture"],
+                        "platforms": groq_info.get("exam_pattern", {}).get("platform", "Online Assessment"),
+                        "clean_code_rules": "Time & space complexity optimization, modular code, edge case testing",
+                    },
+                    project_expectations=project_pts if project_pts else ["Production-grade full-stack / backend projects"],
+                    hiring_tips=groq_info.get("insider_tips", []),
+                    target_job_description=target_jd,
+                )
+    except Exception:
+        pass
+
     if key in CURATED_COMPANIES:
         data = CURATED_COMPANIES[key]
         exp_key = "fresher" if is_fresher else "experienced"
