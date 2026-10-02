@@ -1,9 +1,8 @@
 {
   "version": 2,
   "functions": {
-    "api/**/*.py": {
-      "includeFiles": "app/**",
-      "excludeFiles": "tests/**"
+    "api/index.py": {
+      "includeFiles": "api/app/**"
     }
   },
   "rewrites": [
