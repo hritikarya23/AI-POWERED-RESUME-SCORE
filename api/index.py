@@ -77,3 +77,18 @@ def health_check():
         "version": "1.0.0",
         "platform": "Vercel Serverless",
     }
+
+
+@app.api_route("/{full_path:path}", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+async def catch_all(request: Request, full_path: str):
+    return {
+        "status": "catch_all_matched",
+        "full_path": full_path,
+        "url_path": str(request.url.path),
+        "scope_path": request.scope.get("path"),
+        "init_error": init_error,
+        "matched_path_header": request.headers.get("x-matched-path"),
+        "invoke_path_header": request.headers.get("x-invoke-path"),
+        "routes": [getattr(r, "path", str(type(r))) for r in app.routes],
+    }
+
