@@ -42,8 +42,47 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount API routers
+# Vercel path recovery middleware
+from fastapi import Request
+
+@app.middleware("http")
+async def vercel_path_rewrite_recovery(request: Request, call_next):
+    real_path = (
+        request.headers.get("x-matched-path")
+        or request.headers.get("x-invoke-path")
+        or request.headers.get("x-forwarded-uri")
+    )
+    if real_path:
+        clean_path = real_path.split("?")[0]
+        if clean_path not in ("/api/index.py", "/api/index", "/api", "/api/"):
+            request.scope["path"] = clean_path
+            request.scope["raw_path"] = clean_path.encode()
+
+    response = await call_next(request)
+    return response
+
+
+# Mount API routers (both with /api and without prefix for direct routing)
 app.include_router(api_router, prefix="/api", tags=["Scoring & Analysis"])
+app.include_router(api_router, tags=["Scoring & Analysis Direct"])
+
+
+@app.get("/api/health")
+@app.get("/health")
+def api_health():
+    return {
+        "status": "healthy",
+        "service": "AI-Powered Resume Scorer API",
+        "version": "1.0.0",
+        "platform": "Vercel",
+    }
+
+
+@app.api_route("/api/index.py", methods=["GET", "POST", "OPTIONS"])
+@app.api_route("/api/index", methods=["GET", "POST", "OPTIONS"])
+def index_fallback():
+    return api_health()
+
 
 # Mount static assets directory
 if STATIC_DIR.exists():
@@ -60,6 +99,7 @@ async def serve_static_direct(file_path: str):
         return Response(content=target.read_bytes(), media_type=media_type)
     from fastapi import HTTPException
     raise HTTPException(status_code=404, detail="File not found")
+
 
 
 @app.get("/", include_in_schema=False)
