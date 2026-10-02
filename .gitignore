@@ -43,7 +43,7 @@ htmlcov/
 
 # PyTorch / EasyOCR / HuggingFace model weights
 .cache/
-models/
+/weights/
 *.pt
 *.pth
 *.bin
@@ -66,6 +66,7 @@ Desktop.ini
 
 # Environment variables & secrets
 .env
-.env.*
-*.env
+.env.local
+.env.*.local
+!.env.example
 
