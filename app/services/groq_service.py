@@ -17,8 +17,9 @@ import httpx
 logger = logging.getLogger(__name__)
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-DEFAULT_TEXT_MODEL = "llama-3.3-70b-versatile"
-DEFAULT_VISION_MODEL = "llama-3.2-11b-vision-preview"
+DEFAULT_TEXT_MODEL = "openai/gpt-oss-120b"
+FALLBACK_TEXT_MODEL = "qwen/qwen3.8-27b"
+DEFAULT_VISION_MODEL = "qwen/qwen3.8-27b"
 
 
 def _load_env_file():
@@ -55,11 +56,28 @@ def is_groq_available() -> bool:
 def clean_json_response(raw_text: str) -> str:
     """Extract valid JSON from LLM response markdown blocks."""
     raw_text = raw_text.strip()
+    raw_text = raw_text.replace("\u2011", "-").replace("\u2013", "-").replace("\u2014", "-")
     # Match ```json ... ``` blocks
     json_match = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", raw_text)
     if json_match:
         return json_match.group(1).strip()
     return raw_text
+
+
+def _normalize_intel_dict(data: Any) -> Optional[Dict[str, Any]]:
+    """Safely convert model output into a valid dictionary."""
+    if isinstance(data, dict):
+        return data
+    if isinstance(data, list):
+        merged = {}
+        for i, item in enumerate(data):
+            if isinstance(item, dict):
+                merged.update(item)
+            elif isinstance(item, str) and i + 2 < len(data) and data[i+1] == ':':
+                merged[item] = data[i+2]
+        return merged if merged else None
+    return None
+
 
 
 def fetch_company_intelligence_groq(
@@ -175,7 +193,8 @@ Return ONLY a JSON object matching this exact structure:
             if resp.status_code == 200:
                 data = resp.json()
                 content = data["choices"][0]["message"]["content"]
-                return json.loads(clean_json_response(content))
+                raw_parsed = json.loads(clean_json_response(content))
+                return _normalize_intel_dict(raw_parsed)
             else:
                 logger.error("Groq API error %d: %s", resp.status_code, resp.text[:200])
                 return None
