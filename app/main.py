@@ -51,16 +51,30 @@ if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
+from fastapi.responses import FileResponse, HTMLResponse
+
 @app.get("/", include_in_schema=False)
 async def serve_index():
     """Serve the single-page application frontend."""
     index_path = STATIC_DIR / "index.html"
     if index_path.exists():
-        return FileResponse(str(index_path))
-    return {
-        "message": "AI-Powered Resume Scorer API is running. Visit /docs for the interactive Swagger documentation.",
-        "docs": "/docs",
-    }
+        try:
+            return HTMLResponse(content=index_path.read_text(encoding="utf-8"))
+        except Exception:
+            return FileResponse(str(index_path))
+    return HTMLResponse(
+        content="""
+        <!DOCTYPE html>
+        <html>
+        <head><title>AI-Powered Resume Scorer</title></head>
+        <body style="font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:50px;text-align:center;">
+            <h1>🚀 AI-Powered Resume Scorer API</h1>
+            <p>Service is live and healthy.</p>
+            <p><a href="/docs" style="color:#38bdf8;">Interactive API Documentation (/docs)</a> | <a href="/api/health" style="color:#38bdf8;">Health Check (/api/health)</a></p>
+        </body>
+        </html>
+        """
+    )
 
 
 if __name__ == "__main__":

@@ -1,7 +1,11 @@
 import os
 import sys
 
-# Ensure parent directory is on sys.path so 'app' can be imported by Vercel serverless function
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Ensure root directory is on Python module search path
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
 
 from app.main import app
+
+application = app
