@@ -1005,6 +1005,41 @@ document.addEventListener("DOMContentLoaded", () => {
     window.print();
   });
 
+  // 11. Crystal Press Micro-Interaction Engine ("dabane par crystal effect")
+  document.addEventListener("pointerdown", (e) => {
+    const card = e.target.closest(
+      ".step-card, .sample-bar-card, .sample-btn, .profile-settings-card, .profile-pill, .panel-card, .dropzone, .file-info-card, .company-preview-card, .company-chip, .btn-primary-action, .btn-secondary, .btn-browse, .btn-fetch-intel, .btn-copy, .overview-card, .card-section, .cat-row, .tip-action-box, .bullet-item, .ats-box, .intel-card, .exam-round-item, .must-have-item, .tab-pill, .header-pill, .footer-inner"
+    );
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const maxDimension = Math.max(rect.width, rect.height);
+    const rippleSize = Math.max(maxDimension * 1.5, 120);
+
+    const ripple = document.createElement("span");
+    ripple.className = "crystal-ripple";
+    ripple.style.width = `${rippleSize}px`;
+    ripple.style.height = `${rippleSize}px`;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+
+    const currentPos = window.getComputedStyle(card).position;
+    if (currentPos === "static") {
+      card.style.position = "relative";
+    }
+
+    card.appendChild(ripple);
+
+    setTimeout(() => {
+      if (ripple.parentNode) {
+        ripple.parentNode.removeChild(ripple);
+      }
+    }, 680);
+  });
+
   // Utilities
   function escapeHtml(str) {
     if (!str) return "";
@@ -1021,3 +1056,4 @@ document.addEventListener("DOMContentLoaded", () => {
     return str.replace(/'/g, "\\'").replace(/"/g, "&quot;");
   }
 });
+
