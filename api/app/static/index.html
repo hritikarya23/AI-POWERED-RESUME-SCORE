@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ResumeMatch | AI-Powered Resume Scorer & Company ATS Intelligence</title>
-  <link rel="stylesheet" href="/static/css/style.css?v=2.1.0">
+  <title>ResumeMatch | AI-Powered Resume Scorer & Company Screening</title>
+  <link rel="stylesheet" href="/static/css/style.css?v=2.3.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -26,13 +26,13 @@
       </div>
       <nav class="nav-links">
         <a href="#howItWorks" class="nav-link">How It Works</a>
-        <a href="#demoBar" class="nav-link">Quick Demo</a>
-        <a href="#resumePanel" class="nav-link">Evaluate</a>
+        <a href="#demoBar" class="nav-link">Examples</a>
+        <a href="#resumePanel" class="nav-link">Analyze</a>
       </nav>
       <div class="header-actions">
         <div class="engine-badge" id="engineStatusBadge">
           <span class="status-dot"></span>
-          <span id="engineStatusText">TF-IDF & OCR Active</span>
+          <span id="engineStatusText">Screening Engine Online</span>
         </div>
         <a href="/docs" target="_blank" class="api-docs-btn" title="View OpenAPI / Swagger Documentation">
           API Docs
@@ -43,32 +43,32 @@
 
   <!-- Main Container -->
   <main class="main-content">
-    <!-- Hero Headline (Matching Video Atmosphere) -->
+    <!-- Hero Headline -->
     <section class="hero-section">
-      <h1 class="hero-title">Ready to evaluate your resume fit?</h1>
+      <h1 class="hero-title">Know where your resume stands before you apply.</h1>
       <p class="hero-subtitle">
-        Bypass generic keyword checkers. Experience the premium, company-calibrated semantic ATS scorer built for Google, Zomato, TCS, and 500+ top employers.
+        Compare your experience directly against actual hiring criteria at Google, Amazon, TCS, Zomato, and 500+ top employers. Uncover missing keywords, ATS formatting issues, and customized interview round roadmaps.
       </p>
     </section>
 
-    <!-- "As simple as 1, 2, 3." Bento Steps (Matching Reference Video) -->
+    <!-- Bento Steps -->
     <section class="steps-section" id="howItWorks">
-      <h2 class="steps-title">As simple as <span class="italic-serif">1, 2, 3.</span></h2>
+      <h2 class="steps-title">How it works in <span class="italic-serif">three steps.</span></h2>
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-badge">1</div>
-          <h3 class="step-card-title">Upload Resume</h3>
-          <p class="step-card-desc">Upload PDF, Word (.docx), or resume image (JPG/PNG) with fast client & cloud OCR transcription.</p>
+          <h3 class="step-card-title">Add Your Resume</h3>
+          <p class="step-card-desc">Upload a PDF, Word document, or image screenshot. We parse your text securely in seconds.</p>
         </div>
         <div class="step-card">
           <div class="step-badge">2</div>
-          <h3 class="step-card-title">Select Target Company</h3>
-          <p class="step-card-desc">Choose from 500+ curated employers worldwide or paste any custom job description.</p>
+          <h3 class="step-card-title">Choose Target Company</h3>
+          <p class="step-card-desc">Pick from 500+ verified hiring benchmarks worldwide, or paste any custom job description.</p>
         </div>
         <div class="step-card step-card-active">
           <div class="step-badge step-badge-active">3</div>
-          <h3 class="step-card-title">Match & Roadmap</h3>
-          <p class="step-card-desc">Get your calibrated match score, missing technical skills, and tailored company interview roadmap.</p>
+          <h3 class="step-card-title">Get Fit & Roadmap</h3>
+          <p class="step-card-desc">Receive your calibrated score, missing technical skills, and a breakdown of every interview round.</p>
         </div>
       </div>
     </section>
@@ -81,7 +81,7 @@
             <circle cx="12" cy="12" r="10"></circle>
             <polygon points="10 8 16 12 10 16 10 8"></polygon>
           </svg>
-          <span>Quick Demo:</span>
+          <span>Try an example:</span>
         </div>
         <div class="sample-buttons" id="sampleButtonsContainer">
           <button class="sample-btn" data-role="backend-engineer" data-company="Google">
@@ -102,10 +102,10 @@
       <div class="profile-settings-grid">
         <!-- Experience Type -->
         <div class="setting-item">
-          <label class="setting-label">Candidate Experience Level:</label>
+          <label class="setting-label">Experience Level:</label>
           <div class="setting-pill-group">
             <button type="button" class="profile-pill active" id="btnFresher" data-type="fresher">
-              Fresher (Campus / Entry-Level)
+              Entry-Level / Campus Fresher
             </button>
             <button type="button" class="profile-pill" id="btnExperienced" data-type="experienced">
               Experienced Professional
@@ -119,9 +119,9 @@
           <div class="years-select-wrap">
             <select id="yearsSelect" class="form-select">
               <option value="1">1 - 2 Years (Junior)</option>
-              <option value="3" selected>3 - 5 Years (Mid-Level / SDE-2)</option>
-              <option value="6">6 - 8 Years (Senior / Lead)</option>
-              <option value="10">10+ Years (Principal / Architect)</option>
+              <option value="3" selected>3 - 5 Years (Mid-Level)</option>
+              <option value="6">6 - 8 Years (Senior)</option>
+              <option value="10">10+ Years (Lead / Staff)</option>
             </select>
           </div>
         </div>
@@ -150,14 +150,14 @@
           <div class="panel-title-wrap">
             <span class="step-num">1</span>
             <div>
-              <h2 class="panel-title">Upload Candidate Resume</h2>
-              <p class="panel-desc">Supports PDF, Word, Plain Text, or <strong>JPG / PNG Image OCR</strong></p>
+              <h2 class="panel-title">Add your resume</h2>
+              <p class="panel-desc">Supports PDF, Word (.docx), plain text, or image screenshots</p>
             </div>
           </div>
           <!-- Mode Tabs -->
           <div class="tab-pill-group">
-            <button class="tab-pill active" id="tabUpload">Upload File / Image</button>
-            <button class="tab-pill" id="tabPaste">Paste Text</button>
+            <button class="tab-pill active" id="tabUpload">Upload file</button>
+            <button class="tab-pill" id="tabPaste">Paste text</button>
           </div>
         </div>
 
@@ -174,12 +174,12 @@
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                   </svg>
                 </div>
-                <h3 class="dropzone-title">Drag & drop your resume here</h3>
+                <h3 class="dropzone-title">Drop your resume here, or browse</h3>
                 <p class="dropzone-subtitle">
-                  Supports <strong>PDF (.pdf)</strong>, <strong>Word (.docx)</strong>, <strong>Image (.jpg, .png)</strong>, or <strong>Text (.txt)</strong>
+                  Accepts <strong>PDF</strong>, <strong>Word (.docx)</strong>, <strong>image screenshot</strong>, or <strong>plain text</strong>
                 </p>
                 <div class="ocr-badge">
-                  <span>Client & Cloud Vision OCR Enabled for Image Files (.jpg, .png)</span>
+                  <span>Automatic text extraction enabled for screenshots & photos</span>
                 </div>
                 <button type="button" class="btn-browse" id="btnBrowseFile">Browse File</button>
               </div>
@@ -206,7 +206,7 @@
             <textarea
               id="resumeTextInput"
               class="form-textarea"
-              placeholder="Paste candidate resume text here (Summary, Skills, Work Experience/Projects, Education)..."
+              placeholder="Paste your resume content here (Summary, Work Experience, Projects, Skills, Education)..."
               rows="12"
             ></textarea>
             <div class="char-count-bar">
@@ -222,14 +222,14 @@
           <div class="panel-title-wrap">
             <span class="step-num">2</span>
             <div>
-              <h2 class="panel-title">Target Company & Requirements</h2>
-              <p class="panel-desc">Enter only company name for AI Auto-Discovery, or paste custom JD</p>
+              <h2 class="panel-title">Target company & role</h2>
+              <p class="panel-desc">Look up any company's hiring standards, or paste a custom job description</p>
             </div>
           </div>
           <!-- Mode Tabs for Right Column -->
           <div class="tab-pill-group">
-            <button class="tab-pill active" id="tabCompanyMode">Company Auto-Discovery</button>
-            <button class="tab-pill" id="tabCustomJd">Custom JD</button>
+            <button class="tab-pill active" id="tabCompanyMode">Company profile</button>
+            <button class="tab-pill" id="tabCustomJd">Job description</button>
           </div>
         </div>
 
@@ -237,7 +237,7 @@
           <!-- View 1: Target Company Auto-Discovery -->
           <div class="tab-content" id="companyModeView">
             <div class="company-input-group">
-              <label class="field-label">Type or Select ANY Company in the World:</label>
+              <label class="field-label">Target company:</label>
               <div class="company-search-box">
                 <input
                   type="text"
@@ -251,14 +251,14 @@
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
-                  Discover
+                  Look Up
                 </button>
               </div>
             </div>
 
             <!-- Quick Popular Company Badges -->
             <div class="popular-companies-wrap">
-              <span class="popular-label">Popular Worldwide:</span>
+              <span class="popular-label">Popular companies:</span>
               <div class="popular-chips" id="popularChipsContainer">
                 <span class="company-chip active" data-name="Google">Google</span>
                 <span class="company-chip" data-name="Microsoft">Microsoft</span>
@@ -285,7 +285,7 @@
               </div>
               <div class="preview-stats-grid">
                 <div class="pstat">
-                  <span class="pstat-label">Exam Pattern</span>
+                  <span class="pstat-label">Hiring process</span>
                   <span class="pstat-val" id="previewExamSummary">4 Rounds (OA + 2 Tech + HR)</span>
                 </div>
                 <div class="pstat">
@@ -293,7 +293,7 @@
                   <span class="pstat-val" id="previewCgpa">7.0+ CGPA / No backlogs</span>
                 </div>
                 <div class="pstat">
-                  <span class="pstat-label">Coding Difficulty</span>
+                  <span class="pstat-label">Interview focus</span>
                   <span class="pstat-val" id="previewDsa">LeetCode Medium - Hard</span>
                 </div>
               </div>
@@ -305,7 +305,7 @@
             <textarea
               id="jdTextInput"
               class="form-textarea"
-              placeholder="Paste specific job posting requirements, tech stack, and duties..."
+              placeholder="Paste the job posting description, key duties, and required qualifications here..."
               rows="10"
             ></textarea>
             <div class="char-count-bar">
@@ -322,16 +322,16 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
         </svg>
-        <span>Analyze Resume & Company Roadmap</span>
+        <span>Evaluate Resume Fit</span>
       </button>
     </div>
 
     <!-- Loading State Indicator -->
     <div class="loading-state hidden" id="loadingState">
       <div class="spinner"></div>
-      <h3 class="loading-title">Analyzing Resume & Company Hiring Intelligence</h3>
+      <h3 class="loading-title">Evaluating your resume fit...</h3>
       <p class="loading-subtitle" id="loadingSubtitle">
-        Extracting text (OCR/PDF), running Sentence-Transformers semantic matching, auditing ATS metrics, and generating company-specific acceptance roadmap...
+        Comparing keywords against role requirements, checking ATS readability, and preparing your company interview roadmap...
       </p>
     </div>
 
@@ -356,11 +356,11 @@
           <!-- Grade and Summary -->
           <div class="overview-meta">
             <div class="badge-row">
-              <div class="grade-badge" id="resGradeBadge">A (Strong Match)</div>
-              <div class="experience-badge" id="resExpBadge">🎓 Fresher Track</div>
+              <div class="grade-badge" id="resGradeBadge">Strong Match</div>
+              <div class="experience-badge" id="resExpBadge">Entry-Level Track</div>
             </div>
-            <h3 class="overview-summary-title">Executive Evaluation</h3>
-            <p class="overview-summary-text" id="resSummary">Evaluating candidate fit...</p>
+            <h3 class="overview-summary-title">Profile Overview</h3>
+            <p class="overview-summary-text" id="resSummary">Evaluating your resume...</p>
             <div class="report-actions">
               <button class="btn-secondary" id="btnExportJson">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -368,7 +368,7 @@
                   <polyline points="7 10 12 15 17 10"></polyline>
                   <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
-                Export JSON Report
+                Export JSON
               </button>
               <button class="btn-secondary" id="btnPrintReport">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -376,7 +376,7 @@
                   <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                   <rect x="6" y="14" width="12" height="8"></rect>
                 </svg>
-                Print / Save PDF
+                Save as PDF
               </button>
             </div>
           </div>
@@ -384,55 +384,55 @@
 
         <!-- 4 Sub-Scores Metric Bars -->
         <div class="overview-subscores">
-          <h4 class="subscores-title">Scoring Dimensions</h4>
+          <h4 class="subscores-title">Scoring Breakdown</h4>
 
           <div class="subscore-item">
             <div class="subscore-header">
-              <span class="subscore-name">Semantic Similarity</span>
+              <span class="subscore-name">Role Alignment</span>
               <span class="subscore-val" id="resSemanticScore">0%</span>
             </div>
             <div class="progress-bar-track">
               <div class="progress-bar-fill fill-purple" id="fillSemantic" style="width: 0%"></div>
             </div>
-            <span class="subscore-hint">Deep neural contextual alignment via Sentence-Transformers</span>
+            <span class="subscore-hint">How well your background and achievements align with the job scope</span>
           </div>
 
           <div class="subscore-item">
             <div class="subscore-header">
-              <span class="subscore-name">Skill & Keyword Overlap</span>
+              <span class="subscore-name">Skills & Keywords</span>
               <span class="subscore-val" id="resSkillScore">0%</span>
             </div>
             <div class="progress-bar-track">
               <div class="progress-bar-fill fill-emerald" id="fillSkill" style="width: 0%"></div>
             </div>
-            <span class="subscore-hint">Coverage of hard tech skills, libraries, and tools</span>
+            <span class="subscore-hint">Coverage of required programming languages, tools, and libraries</span>
           </div>
 
           <div class="subscore-item">
             <div class="subscore-header">
-              <span class="subscore-name">Requirement Coverage</span>
+              <span class="subscore-name">Requirements Coverage</span>
               <span class="subscore-val" id="resReqScore">0%</span>
             </div>
             <div class="progress-bar-track">
               <div class="progress-bar-fill fill-blue" id="fillReq" style="width: 0%"></div>
             </div>
-            <span class="subscore-hint">Discrete duty and qualification fulfillment rate</span>
+            <span class="subscore-hint">Fulfillment of specific qualifications and day-to-day duties</span>
           </div>
 
           <div class="subscore-item">
             <div class="subscore-header">
-              <span class="subscore-name">ATS Readability & Impact</span>
+              <span class="subscore-name">Formatting & Structure</span>
               <span class="subscore-val" id="resAtsScore">0%</span>
             </div>
             <div class="progress-bar-track">
               <div class="progress-bar-fill fill-amber" id="fillAts" style="width: 0%"></div>
             </div>
-            <span class="subscore-hint">Section structure, power verbs, and quantified metrics</span>
+            <span class="subscore-hint">ATS readability, standard section headers, and quantified accomplishments</span>
           </div>
         </div>
       </section>
 
-      <!-- NEW CARD: Target Company Acceptance & Eligibility Roadmap -->
+      <!-- Target Company Acceptance & Eligibility Roadmap -->
       <section class="card-section" id="companyRoadmapSection">
         <div class="card-section-header">
           <div class="card-title-group">
@@ -442,8 +442,8 @@
               </svg>
             </span>
             <div>
-              <h3 class="card-title" id="roadmapCompanyTitle">Target Company Hiring Intel & Eligibility Roadmap</h3>
-              <p class="card-subtitle">Exact exam pattern, eligibility requirements, and resume gaps to crack this company</p>
+              <h3 class="card-title" id="roadmapCompanyTitle">Company Hiring & Interview Roadmap</h3>
+              <p class="card-subtitle">Selection stages, eligibility guidelines, and preparation focus for this employer</p>
             </div>
           </div>
           <div class="eligibility-status-badge" id="roadmapStatusBadge">Eligible</div>
@@ -455,7 +455,7 @@
           <div class="intel-card">
             <h4 class="intel-card-title text-blue">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              Official Eligibility Criteria
+              Minimum Requirements
             </h4>
             <div class="intel-content" id="roadmapEligibilityList"></div>
           </div>
@@ -464,7 +464,7 @@
           <div class="intel-card">
             <h4 class="intel-card-title text-purple">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-              Coding & Project Expectations
+              Interview & Technical Focus
             </h4>
             <div class="intel-content" id="roadmapExpectationsList"></div>
           </div>
@@ -473,7 +473,7 @@
           <div class="intel-card">
             <h4 class="intel-card-title text-danger">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-              Resume Gaps for this Company
+              Areas to Address Before Applying
             </h4>
             <div class="intel-content" id="roadmapGapsList"></div>
           </div>
@@ -481,7 +481,7 @@
 
         <!-- Exam Pattern Round-by-Round Timeline -->
         <div class="exam-timeline-wrap">
-          <h4 class="exam-timeline-title">🎯 Exam & Hiring Process Breakdown</h4>
+          <h4 class="exam-timeline-title">Interview Stages & Format</h4>
           <div class="exam-rounds-list" id="examRoundsList"></div>
         </div>
 
@@ -491,7 +491,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
             </svg>
-            Must-Have Resume Additions Before Applying:
+            Key Items to Highlight on Your Resume:
           </h4>
           <div class="must-have-list" id="mustHaveList"></div>
         </div>
@@ -510,8 +510,8 @@
                 </svg>
               </span>
               <div>
-                <h3 class="card-title">Skill & Keyword Match Analysis</h3>
-                <p class="card-subtitle">Exact keywords matched vs missing in relation to company requirements</p>
+                <h3 class="card-title">Skills & Keyword Match</h3>
+                <p class="card-subtitle">Technologies and competencies found in your resume compared to role requirements</p>
               </div>
             </div>
           </div>
@@ -527,7 +527,7 @@
 
             <div class="skills-column">
               <h4 class="skills-col-title text-danger">
-                <span>Missing / Recommended Skills</span>
+                <span>Recommended Additions</span>
                 <span class="counter-badge badge-danger" id="missingSkillsCount">0</span>
               </h4>
               <div class="skills-tags-wrap" id="missingSkillsTags"></div>
@@ -536,7 +536,7 @@
 
           <!-- Category Breakdown Table -->
           <div class="category-breakdown-wrap">
-            <h5 class="cat-table-title">Breakdown by Domain Category</h5>
+            <h5 class="cat-table-title">Coverage by Technical Domain</h5>
             <div class="cat-table" id="categoryTableBody"></div>
           </div>
         </section>
@@ -551,8 +551,8 @@
                 </svg>
               </span>
               <div>
-                <h3 class="card-title">High-Impact Improvement Tips</h3>
-                <p class="card-subtitle">Prioritized actions to increase your resume ranking and recruiter callback rate</p>
+                <h3 class="card-title">Recommended Improvements</h3>
+                <p class="card-subtitle">Prioritized suggestions to strengthen your resume before submitting</p>
               </div>
             </div>
           </div>
@@ -565,7 +565,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
               </svg>
-              Ready-to-Use Tailored Bullet Point Suggestions (Google XYZ Formula)
+              Suggested Experience Bullet Points (XYZ Framework)
             </h4>
             <div class="suggested-bullets-list" id="suggestedBulletsList"></div>
           </div>
@@ -587,8 +587,8 @@
               </svg>
             </span>
             <div>
-              <h3 class="card-title">Job Requirements Alignment Matrix</h3>
-              <p class="card-subtitle">Semantic matching of each specific requirement to the most relevant resume evidence</p>
+              <h3 class="card-title">Job Requirements Checklist</h3>
+              <p class="card-subtitle">How your experience maps to each requirement and responsibility</p>
             </div>
           </div>
         </div>
@@ -598,8 +598,8 @@
             <thead>
               <tr>
                 <th style="width: 45%;">Job Requirement / Duty</th>
-                <th style="width: 40%;">Best Matching Resume Evidence</th>
-                <th style="width: 15%; text-align: center;">Match Status</th>
+                <th style="width: 40%;">Matching Resume Evidence</th>
+                <th style="width: 15%; text-align: center;">Alignment</th>
               </tr>
             </thead>
             <tbody id="requirementsTableBody"></tbody>
@@ -620,27 +620,27 @@
               </svg>
             </span>
             <div>
-              <h3 class="card-title">ATS Diagnostic & Structural Audit</h3>
-              <p class="card-subtitle">Applicant Tracking System readability, sections, and quantifiable metrics</p>
+              <h3 class="card-title">ATS Format & Readability Audit</h3>
+              <p class="card-subtitle">Layout structure, standard section headers, and measurable impact check</p>
             </div>
           </div>
         </div>
 
         <div class="ats-grid">
           <div class="ats-box">
-            <h4 class="ats-box-title">Sections Detected</h4>
+            <h4 class="ats-box-title">Standard Sections</h4>
             <div class="checklist" id="atsSectionsList"></div>
           </div>
           <div class="ats-box">
-            <h4 class="ats-box-title">Quantifiable Metrics Detected</h4>
+            <h4 class="ats-box-title">Measurable Results & Metrics</h4>
             <div class="metrics-tags" id="atsMetricsList"></div>
           </div>
           <div class="ats-box">
-            <h4 class="ats-box-title">Strong Action Verbs</h4>
+            <h4 class="ats-box-title">Action Verbs</h4>
             <div class="verbs-tags" id="atsVerbsList"></div>
           </div>
           <div class="ats-box">
-            <h4 class="ats-box-title">Document & Contact Essentials</h4>
+            <h4 class="ats-box-title">Contact Details & Page Length</h4>
             <div class="contact-checklist" id="atsContactList"></div>
           </div>
         </div>
@@ -660,17 +660,17 @@
       </div>
       <div class="footer-links">
         <a href="#howItWorks">How It Works</a>
-        <a href="#demoBar">Quick Demo</a>
-        <a href="#resumePanel">Evaluate</a>
+        <a href="#demoBar">Examples</a>
+        <a href="#resumePanel">Analyze</a>
         <a href="/docs" target="_blank">API Docs</a>
       </div>
       <div class="footer-copy">
-        &copy; 2026 ResumeMatch. All rights reserved.
+        &copy; 2026 ResumeMatch. Built to help candidates stand out in tech hiring.
       </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-  <script src="/static/js/app.js?v=2.1.0"></script>
+  <script src="/static/js/app.js?v=2.3.0"></script>
 </body>
 </html>

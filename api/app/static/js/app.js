@@ -504,11 +504,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // If it is an image and cloud OCR failed or was rate-limited, fallback to browser Tesseract.js
       if (isImage && typeof Tesseract !== "undefined") {
         try {
-          previewFileMeta.textContent = "Cloud AI busy — running local in-browser OCR (Tesseract)...";
+          previewFileMeta.textContent = "Processing image — extracting text...";
           const ret = await Tesseract.recognize(file, "eng", {
             logger: (m) => {
               if (m && m.status === "recognizing text" && typeof m.progress === "number") {
-                previewFileMeta.textContent = `Browser OCR in progress (${Math.round(m.progress * 100)}%)...`;
+                previewFileMeta.textContent = `Scanning image (${Math.round(m.progress * 100)}%)...`;
               }
             },
           });
@@ -518,7 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
             resumeTextInput.value = browserText;
             updateWordCount(resumeTextInput, resumeWordCount);
             const words = browserText.split(/\s+/).length;
-            previewFileMeta.textContent = `BROWSER OCR • 1 page • ${words.toLocaleString()} words extracted`;
+            previewFileMeta.textContent = `Image parsed • 1 page • ${words.toLocaleString()} words`;
             return;
           }
         } catch (tessErr) {
@@ -780,7 +780,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     document.getElementById("companyRoadmapSection").classList.remove("hidden");
 
-    roadmapCompanyTitle.textContent = `${profile.company_name} Hiring Intel & Acceptance Roadmap`;
+    roadmapCompanyTitle.textContent = `${profile.company_name} — Hiring & Interview Roadmap`;
     roadmapStatusBadge.textContent = roadmap.eligibility_status;
 
     if (roadmap.eligibility_status === "Eligible") {
@@ -811,7 +811,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .map((g) => `<div class="intel-bullet" style="color: #fca5a5;"><span>${escapeHtml(g)}</span></div>`)
         .join("");
     } else {
-      roadmapGapsList.innerHTML = `<div class="intel-bullet" style="color: #34d399;"><span>Your resume satisfies all primary criteria for ${profile.company_name}!</span></div>`;
+      roadmapGapsList.innerHTML = `<div class="intel-bullet" style="color: #34d399;"><span>Your resume covers the key criteria for ${profile.company_name}.</span></div>`;
     }
 
     // Exam Rounds Timeline
