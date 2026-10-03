@@ -240,8 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
       previewCgpa.textContent = profile.eligibility_criteria.cgpa_min || "Standard Academic Standing";
       previewDsa.textContent = profile.coding_expectations.dsa_difficulty || "Standard Problem Solving";
 
-      // If user switches to custom JD, pre-fill it with this discovered JD
-      if (!jdTextInput.value.trim()) {
+      // Keep discovered JD synced with the active company
+      if (tabCompanyMode.classList.contains("active") || !jdTextInput.value.trim()) {
         jdTextInput.value = profile.target_job_description;
         updateWordCount(jdTextInput, jdWordCount);
       }
@@ -386,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const customJd = jdTextInput.value.trim();
 
     if (isCompanyMode && !targetComp) {
-      alert("Please enter a Target Company Name (e.g. Google, TCS, Amazon).");
+      alert("Please enter a Target Company Name (e.g. Google, TCS, Zomato, Amazon).");
       targetCompanyInput.focus();
       return;
     }
@@ -413,6 +413,12 @@ document.addEventListener("DOMContentLoaded", () => {
     btnScoreResume.disabled = true;
     loadingState.scrollIntoView({ behavior: "smooth", block: "center" });
 
+    // Mode-specific parameters:
+    // In Company Mode: score against the specific target company (do NOT pass customJd)
+    // In Custom JD Mode: score against the custom JD (do NOT pass target_company)
+    const scoreCompany = isCompanyMode ? targetComp : null;
+    const scoreJd = isCompanyMode ? null : customJd;
+
     try {
       let responseData;
 
@@ -420,8 +426,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Multipart Upload
         const formData = new FormData();
         formData.append("resume_file", currentFile);
-        if (targetComp) formData.append("target_company", targetComp);
-        if (customJd) formData.append("job_description", customJd);
+        if (scoreCompany) formData.append("target_company", scoreCompany);
+        if (scoreJd) formData.append("job_description", scoreJd);
         formData.append("experience_type", currentExperienceType);
         formData.append("years_of_experience", years.toString());
         formData.append("target_role", targetRole);
@@ -444,8 +450,8 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             resume_text: textToScore,
-            target_company: targetComp || null,
-            job_description: customJd || null,
+            target_company: scoreCompany,
+            job_description: scoreJd,
             experience_type: currentExperienceType,
             years_of_experience: years,
             target_role: targetRole,

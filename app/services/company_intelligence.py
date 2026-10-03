@@ -14,6 +14,7 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
         "tier": "Tier-1 Tech / FAANG",
         "headquarters": "Mountain View, CA, USA",
         "overview": "Global technology leader pioneering search, cloud computing, distributed systems, machine learning, and operating systems.",
+        "tech_stack": ["C++", "Java", "Python", "Go", "Distributed Systems", "Algorithms", "Data Structures", "System Design", "Linux", "Docker"],
         "eligibility_criteria": {
             "fresher": {
                 "degree": "B.Tech/B.E, M.Tech, MS or PhD in Computer Science, IT, or Mathematics/related quantitative field",
@@ -91,6 +92,7 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
         "tier": "Tier-1 Tech / FAANG",
         "headquarters": "Redmond, WA, USA",
         "overview": "Pioneering technology multinational empowering organizations with Azure Cloud, Windows, Office 365, Teams, and Copilot AI.",
+        "tech_stack": ["C#", ".NET Core", "Azure", "TypeScript", "React", "Java", "Python", "Distributed Systems", "SQL", "OOP", "Design Patterns"],
         "eligibility_criteria": {
             "fresher": {
                 "degree": "B.Tech/B.E, M.Tech, MCA, MS in CS/IT/ECE or related branches",
@@ -166,6 +168,7 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
         "tier": "Tier-1 Tech / FAANG",
         "headquarters": "Seattle, WA, USA",
         "overview": "World's largest e-commerce and cloud infrastructure powerhouse (AWS), driven by 16 Leadership Principles.",
+        "tech_stack": ["Java", "Python", "AWS", "DynamoDB", "Microservices", "Distributed Systems", "Object-Oriented Design", "Linux", "REST APIs"],
         "eligibility_criteria": {
             "fresher": {
                 "degree": "B.Tech/B.E, M.Tech, MCA in CS/IT/ECE or related fields",
@@ -242,6 +245,7 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
         "tier": "Global IT Services",
         "headquarters": "Mumbai, India",
         "overview": "India's largest IT multinational enterprise operating in 55 countries, offering Ninja, Digital, and Prime engineering packages.",
+        "tech_stack": ["Core Java", "Python", "SQL", "HTML", "CSS", "JavaScript", "Git", "Database", "OOP", "Data Structures", "SDLC"],
         "eligibility_criteria": {
             "fresher": {
                 "degree": "B.Tech/B.E, M.Tech, MCA, M.Sc (CS/IT) from recognized universities",
@@ -309,6 +313,7 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
         "tier": "Global IT Services",
         "headquarters": "Bengaluru, India",
         "overview": "Global leader in digital consulting, enterprise services, and AI solutions with Specialist Programmer (SP) and DSE bands.",
+        "tech_stack": ["Java", "Python", "SQL", "JavaScript", "Spring Boot", "HTML", "CSS", "Git", "Relational Databases", "Agile"],
         "eligibility_criteria": {
             "fresher": {
                 "degree": "B.E/B.Tech, M.E/M.Tech, MCA, M.Sc (CS/Electronics/Mathematics)",
@@ -376,6 +381,7 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
         "tier": "Global IT Services",
         "headquarters": "Bengaluru, India",
         "overview": "Leading global technology services company delivering innovation across cloud, cybersecurity, and digital consulting.",
+        "tech_stack": ["Java", "Python", "SQL", "JavaScript", "C++", "Database Design", "Git", "Agile", "Linux", "Data Structures"],
         "eligibility_criteria": {
             "fresher": {
                 "degree": "B.E./B.Tech (all branches), M.E./M.Tech, 5-year Integrated-M.Tech",
@@ -441,6 +447,7 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
         "tier": "Tier-1 Tech / Product",
         "headquarters": "San Francisco, CA, USA",
         "overview": "Global mobility platform connecting millions of riders and drivers in real-time with ultra-low latency distributed tech.",
+        "tech_stack": ["Go", "Java", "Python", "Kafka", "Redis", "Microservices", "Distributed Systems", "Concurrency", "Docker", "Kubernetes"],
         "eligibility_criteria": {
             "fresher": {
                 "degree": "B.Tech/B.E, M.Tech, MS in CS or related disciplines",
@@ -515,6 +522,7 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
         "tier": "Investment Banking / FinTech",
         "headquarters": "New York, NY, USA",
         "overview": "Premier global financial institution engineering high-frequency trading platforms, risk analytics, and enterprise fintech.",
+        "tech_stack": ["Core Java", "C++", "Python", "SQL", "Distributed Caching", "Low Latency", "Multithreading", "Algorithms", "Data Structures", "Linux"],
         "eligibility_criteria": {
             "fresher": {
                 "degree": "B.Tech/B.E, M.Tech, Dual Degree, MCA in CS/IT/EE/Maths",
@@ -583,6 +591,460 @@ CURATED_COMPANIES: Dict[str, Dict[str, Any]] = {
             "Master Java Collections framework and Multithreading (Locks, Synchronized, Executors, volatile) or modern C++.",
         ],
     },
+    "zomato": {
+        "company_name": "Zomato",
+        "industry": "Food Delivery, Quick-Commerce & Consumer Internet",
+        "tier": "Tier-1 Product / Unicorn",
+        "headquarters": "Gurugram, Haryana, India",
+        "overview": "India's premier food ordering, restaurant discovery, and quick-commerce platform delivering at high scale.",
+        "tech_stack": ["Go", "Python", "Node.js", "React", "Redis", "Kafka", "PostgreSQL", "Docker", "Kubernetes", "Microservices", "REST API", "SQL"],
+        "eligibility_criteria": {
+            "fresher": {
+                "degree": "B.Tech/B.E, BCA/MCA, or BS in Computer Science / IT or related field",
+                "cgpa_min": "No strict cutoff (typically 6.5+ CGPA or 65% preferred)",
+                "backlogs": "0 active backlogs at time of joining",
+                "experience": "0 - 1 Years (Entry Level / SDE-1)",
+            },
+            "experienced": {
+                "degree": "Bachelor's / Master's degree in CS or equivalent experience",
+                "cgpa_min": "Not applicable",
+                "experience": "2+ Years (SDE-2 / Senior SDE)",
+            },
+        },
+        "coding_expectations": {
+            "dsa_difficulty": "LeetCode Medium",
+            "primary_topics": ["Arrays & Strings", "HashMaps & Sets", "Trees & Graphs", "Dynamic Programming", "Sliding Window", "Concurrency"],
+            "platforms": "HackerEarth / Coderbyte",
+            "clean_code_rules": "Fast execution, robust input validation, clean REST API design, database query optimization",
+        },
+        "project_expectations": {
+            "fresher": [
+                "Production-ready web application or RESTful backend APIs with relational/NoSQL databases",
+                "Hands-on caching (Redis) or message queues (Kafka) for real-time responsiveness",
+                "Clean GitHub repositories with live demo links and API documentation",
+            ],
+            "experienced": [
+                "High-throughput microservices handling peak traffic surges (millions of concurrent users)",
+                "Distributed caching strategies, database read-replicas, rate limiting, and zero-downtime deployments",
+                "Kafka event streams, asynchronous workers, and low-latency order dispatch pipelines",
+            ],
+        },
+        "exam_pattern": [
+            ExamRound(
+                round_number=1,
+                name="Online Assessment (HackerEarth)",
+                format="Automated Coding Test",
+                duration="90 Minutes",
+                focus_areas=["DSA Coding Questions", "SQL Optimization", "Problem Solving Speed"],
+                description="2 algorithmic problems (Medium difficulty) and 1 complex SQL query.",
+            ),
+            ExamRound(
+                round_number=2,
+                name="Technical Round 1 (DSA & Live Coding)",
+                format="1-on-1 Virtual Interview",
+                duration="45 - 60 Minutes",
+                focus_areas=["Data Structures", "Algorithms", "Time Complexity", "Clean Code"],
+                description="Live problem solving focusing on data structures, edge cases, and code readability.",
+            ),
+            ExamRound(
+                round_number=3,
+                name="Technical Round 2 (System Design & Projects)",
+                format="Architecture & Project Deep Dive",
+                duration="45 - 60 Minutes",
+                focus_areas=["Low-Level Design (LLD)", "Database Schema Design", "Resume Projects Defense"],
+                description="Designing a real-time tracking or catalog search feature, and probing past engineering decisions.",
+            ),
+            ExamRound(
+                round_number=4,
+                name="Cultural & Leadership Fit",
+                format="Discussion with Engineering Director",
+                duration="30 - 45 Minutes",
+                focus_areas=["Startup Speed & Hustle", "Ownership Mindset", "Customer Focus"],
+                description="Evaluating passion for shipping high-impact product features and working in fast-paced teams.",
+            ),
+        ],
+        "hiring_tips": [
+            "Zomato deeply values hustle and practical execution—show evidence of building and deploying real things.",
+            "Know your resume projects inside out: interviewers test the 'Why' behind every technical choice.",
+            "Write clean, working code rapidly in Python, Go, Java, or JavaScript.",
+        ],
+    },
+    "swiggy": {
+        "company_name": "Swiggy",
+        "industry": "On-Demand Delivery, Quick-Commerce (Instamart) & Consumer Tech",
+        "tier": "Tier-1 Product / Unicorn",
+        "headquarters": "Bengaluru, Karnataka, India",
+        "overview": "India's leading on-demand convenience platform powering food delivery, grocery, and instant commerce.",
+        "tech_stack": ["Go", "Java", "Spring Boot", "Microservices", "Kafka", "Redis", "AWS", "PostgreSQL", "Distributed Systems", "REST API"],
+        "eligibility_criteria": {
+            "fresher": {
+                "degree": "B.Tech/B.E, M.Tech, MCA in Computer Science / IT / Circuit branches",
+                "cgpa_min": "7.0+ CGPA or 70% preferred",
+                "backlogs": "0 active backlogs",
+                "experience": "0 - 1 Years (SDE-1)",
+            },
+            "experienced": {
+                "degree": "Bachelor's/Master's in CS or equivalent",
+                "cgpa_min": "Not applicable",
+                "experience": "2+ Years (SDE-2 / SDE-3)",
+            },
+        },
+        "coding_expectations": {
+            "dsa_difficulty": "LeetCode Medium",
+            "primary_topics": ["Binary Trees & BST", "Dynamic Programming", "Graphs (Dijkstra)", "Priority Queues", "System Concurrency"],
+            "platforms": "HackerEarth / HackerRank",
+            "clean_code_rules": "Modular code, separation of concerns, solid exception handling, unit test mindset",
+        },
+        "project_expectations": {
+            "fresher": [
+                "Microservices or full-stack applications with asynchronous job processing",
+                "Relational and NoSQL database usage, caching with Redis, and API security",
+                "Strong foundation in OOP principles and data structures",
+            ],
+            "experienced": [
+                "Geo-routing systems, hyper-local search, batching and delivery partner assignment algorithms",
+                "Distributed messaging with Kafka, Redis cluster, low latency, and 99.99% uptime SLAs",
+            ],
+        },
+        "exam_pattern": [
+            ExamRound(
+                round_number=1,
+                name="Online Coding Test",
+                format="HackerEarth Assessment",
+                duration="90 Minutes",
+                focus_areas=["2 DSA Questions (Medium)", "MCQs on Core CS & Concurrency"],
+                description="Algorithmic problem solving and core CS fundamental screening.",
+            ),
+            ExamRound(
+                round_number=2,
+                name="Technical Round 1 (DSA & Problem Solving)",
+                format="1-on-1 Live Coding",
+                duration="60 Minutes",
+                focus_areas=["Trees & Graphs", "Dynamic Programming", "Clean Code"],
+                description="Solving 2 algorithmic problems with optimal time and space complexity.",
+            ),
+            ExamRound(
+                round_number=3,
+                name="Technical Round 2 (Machine Coding / LLD)",
+                format="Live Component Design",
+                duration="60 - 90 Minutes",
+                focus_areas=["Object-Oriented Design", "Design Patterns", "Clean Architecture"],
+                description="Implementing a working modular system (e.g. Rate Limiter, Delivery Fee Calculator).",
+            ),
+            ExamRound(
+                round_number=4,
+                name="Hiring Manager & Swiggy Values",
+                format="Discussion with Engineering Leader",
+                duration="45 Minutes",
+                focus_areas=["Customer First", "Continuous Innovation", "Integrity & Teamwork"],
+                description="Assessing cultural fit, ownership, and cross-functional collaboration.",
+            ),
+        ],
+        "hiring_tips": [
+            "Practice machine coding: writing modular, extensible code with Design Patterns within 60 minutes.",
+            "Demonstrate understanding of how distributed on-demand logistics work.",
+        ],
+    },
+    "flipkart": {
+        "company_name": "Flipkart",
+        "industry": "E-Commerce & Retail Technology",
+        "tier": "Tier-1 Product / Unicorn",
+        "headquarters": "Bengaluru, Karnataka, India",
+        "overview": "India's pioneer e-commerce marketplace innovating supply chain, payments, and high-scale consumer internet.",
+        "tech_stack": ["Java", "Python", "Spring Boot", "Kafka", "MySQL", "Elasticsearch", "Redis", "Distributed Caching", "Microservices", "SQL"],
+        "eligibility_criteria": {
+            "fresher": {
+                "degree": "B.Tech/B.E, M.Tech, MCA in CS/IT or quantitative disciplines",
+                "cgpa_min": "7.0+ CGPA",
+                "backlogs": "0 active backlogs",
+                "experience": "0 - 1 Years (SDE-1)",
+            },
+            "experienced": {
+                "degree": "Bachelor's/Master's in CS or equivalent",
+                "cgpa_min": "Not applicable",
+                "experience": "2+ Years (SDE-2 / SDE-3)",
+            },
+        },
+        "coding_expectations": {
+            "dsa_difficulty": "LeetCode Medium to Hard",
+            "primary_topics": ["Machine Coding (LLD)", "Graphs & Trees", "Dynamic Programming", "HashMaps", "Design Patterns"],
+            "platforms": "HackerRank / Google Meet",
+            "clean_code_rules": "Strict Object-Oriented Design (SOLID principles), Design Patterns, clean interfaces, unit tests",
+        },
+        "project_expectations": {
+            "fresher": [
+                "High-performance backend applications with clean layered architecture (Controller, Service, Repository)",
+                "Database design with proper indexing, schema normalization, and RESTful APIs",
+            ],
+            "experienced": [
+                "Distributed inventory, search, or flash-sale order processing systems",
+                "Elasticsearch clustering, Kafka event pipelines, and high-availability database sharding",
+            ],
+        },
+        "exam_pattern": [
+            ExamRound(
+                round_number=1,
+                name="Online Coding Assessment",
+                format="HackerRank Platform",
+                duration="90 Minutes",
+                focus_areas=["3 Algorithmic Coding Problems (DP, Graphs, Arrays)"],
+                description="Testing deep problem-solving skills and algorithmic efficiency.",
+            ),
+            ExamRound(
+                round_number=2,
+                name="Machine Coding Round (Flipkart Signature Round)",
+                format="Live Coding & Design",
+                duration="90 - 120 Minutes",
+                focus_areas=["Low-Level Design (LLD)", "SOLID Principles", "Working Executable Code", "Design Patterns"],
+                description="Designing and writing fully working, modular code for a complex problem (e.g. In-Memory Search, Ride Sharing, Snake & Ladder).",
+            ),
+            ExamRound(
+                round_number=3,
+                name="Problem Solving & Data Structures",
+                format="1-on-1 Algorithm Round",
+                duration="60 Minutes",
+                focus_areas=["Advanced DSA", "Graph Algorithms", "Optimization"],
+                description="Solving 2 hard algorithmic questions with mathematical rigor.",
+            ),
+            ExamRound(
+                round_number=4,
+                name="Hiring Manager Interview",
+                format="Leadership & Culture",
+                duration="45 - 60 Minutes",
+                focus_areas=["Flipkart Values: Audacity, Bias for Action, Customer Obsession", "Architectural Tradeoffs"],
+                description="Assessing engineering excellence, culture, and readiness to handle Big Billion Days scale.",
+            ),
+        ],
+        "hiring_tips": [
+            "Master the Flipkart Machine Coding round: practice writing clean, object-oriented code with clean classes in 90 minutes.",
+            "Write clean separation of concerns and be prepared to add a new requirement live.",
+        ],
+    },
+    "meta": {
+        "company_name": "Meta (Facebook)",
+        "industry": "Social Media, Virtual Reality & AI Products",
+        "tier": "Tier-1 Tech / FAANG",
+        "headquarters": "Menlo Park, CA, USA",
+        "overview": "Global technology company connecting billions of people across Facebook, Instagram, WhatsApp, and Meta Quest.",
+        "tech_stack": ["Python", "C++", "React", "Distributed Systems", "GraphQL", "Algorithms", "Data Structures", "System Design", "Linux"],
+        "eligibility_criteria": {
+            "fresher": {
+                "degree": "B.Tech/B.E, MS or PhD in Computer Science or related quantitative field",
+                "cgpa_min": "No strict cutoff",
+                "backlogs": "0 active backlogs",
+                "experience": "0 - 1 Years",
+            },
+            "experienced": {
+                "degree": "Bachelor's / Master's degree in CS or equivalent",
+                "cgpa_min": "Not applicable",
+                "experience": "2+ Years (E4 / E5)",
+            },
+        },
+        "coding_expectations": {
+            "dsa_difficulty": "LeetCode Medium to Hard (High Speed Required: 2 questions in 45 mins)",
+            "primary_topics": ["Binary Search", "Trees & Graphs (BFS/DFS)", "Dynamic Programming", "Arrays & Two Pointers", "HashMaps"],
+            "platforms": "CoderPad / Meta Internal Environment",
+            "clean_code_rules": "Ultra-fast bug-free implementation, edge cases identified before running",
+        },
+        "project_expectations": {
+            "fresher": [
+                "Full-stack or systems projects with modern frameworks (React, Python/FastAPI, GraphQL)",
+                "Clean open source contributions or competitive programming track record",
+            ],
+            "experienced": [
+                "Massive-scale distributed systems handling billions of users",
+                "Graph databases, asynchronous pipelines, real-time messaging, and high-performance caching",
+            ],
+        },
+        "exam_pattern": [
+            ExamRound(
+                round_number=1,
+                name="Technical Screening (Phone Screen)",
+                format="1-on-1 Live Coding (CoderPad)",
+                duration="45 Minutes",
+                focus_areas=["2 LeetCode Medium/Hard Coding Problems"],
+                description="Speed and accuracy test: solving and testing 2 problems cleanly within 45 minutes.",
+            ),
+            ExamRound(
+                round_number=2,
+                name="Coding Interview 1",
+                format="1-on-1 Virtual Whiteboarding",
+                duration="45 Minutes",
+                focus_areas=["Data Structures & Algorithms", "Edge Case Verification"],
+                description="Solving 2 algorithmic problems with clear complexity analysis.",
+            ),
+            ExamRound(
+                round_number=3,
+                name="Coding Interview 2 or System Design",
+                format="Architecture / Algorithms",
+                duration="45 Minutes",
+                focus_areas=["System Design (E4+) or Core CS Coding (E3)"],
+                description="Designing scalable systems like Instagram Feed, Messenger, or Proximity Search.",
+            ),
+            ExamRound(
+                round_number=4,
+                name="Behavioral / Meta Values",
+                format="STAR Behavioral Interview",
+                duration="45 Minutes",
+                focus_areas=["Move Fast", "Be Bold", "Focus on Long-Term Impact", "Resolve Conflicts"],
+                description="Demonstrating rapid iteration, high impact, and constructive communication.",
+            ),
+        ],
+        "hiring_tips": [
+            "Meta interviews test speed: you must complete 2 LeetCode Medium/Hard questions cleanly within a 45-minute window.",
+            "Write code immediately after outlining the approach—do not spend 20 minutes discussing before typing.",
+        ],
+    },
+    "netflix": {
+        "company_name": "Netflix",
+        "industry": "Streaming Entertainment, Cloud Infrastructure & Content Tech",
+        "tier": "Tier-1 Tech / FAANG",
+        "headquarters": "Los Gatos, CA, USA",
+        "overview": "World's leading streaming entertainment service with industry-defining engineering culture and open-source cloud architectures.",
+        "tech_stack": ["Java", "Spring Boot", "Microservices", "AWS", "Kafka", "Cassandra", "Reactive Systems", "Docker", "Distributed Systems"],
+        "eligibility_criteria": {
+            "fresher": {
+                "degree": "BS/MS in CS or exceptional self-taught software engineering track record",
+                "cgpa_min": "Not applicable",
+                "backlogs": "N/A",
+                "experience": "0 - 1 Years (New Grad)",
+            },
+            "experienced": {
+                "degree": "BS/MS/PhD in Computer Science or equivalent",
+                "cgpa_min": "Not applicable",
+                "experience": "3+ Years (Senior Software Engineer)",
+            },
+        },
+        "coding_expectations": {
+            "dsa_difficulty": "LeetCode Medium to Hard",
+            "primary_topics": ["Distributed Systems", "Concurrency", "Trees & Graphs", "Dynamic Programming", "High-Throughput Caching"],
+            "platforms": "CoderPad",
+            "clean_code_rules": "Production readiness, self-contained architecture, resilience (Chaos Engineering)",
+        },
+        "project_expectations": {
+            "fresher": [
+                "Full-stack microservices deployed on AWS with containerization (Docker)",
+                "Reactive streams, message queues, and high availability systems",
+            ],
+            "experienced": [
+                "Ultra-high scale streaming, low latency video delivery, distributed storage (Cassandra/DynamoDB)",
+                "Service mesh, automated failover, and observability at enterprise scale",
+            ],
+        },
+        "exam_pattern": [
+            ExamRound(
+                round_number=1,
+                name="Technical Phone Screen",
+                format="1-on-1 Coding Video Session",
+                duration="45 - 60 Minutes",
+                focus_areas=["Data Structures & Algorithms", "System Fundamentals"],
+                description="Writing clean, optimal code while discussing systems architecture.",
+            ),
+            ExamRound(
+                round_number=2,
+                name="Technical Deep Dive & Concurrency",
+                format="Deep Systems Interview",
+                duration="60 Minutes",
+                focus_areas=["Multithreading", "Low Latency", "Reactive Architecture"],
+                description="Testing execution depth, asynchronous events, and failure recovery.",
+            ),
+            ExamRound(
+                round_number=3,
+                name="Distributed System Design",
+                format="HLD Architectural Defense",
+                duration="60 Minutes",
+                focus_areas=["Streaming Architecture", "Caching Layers", "Fault Tolerance"],
+                description="Designing resilient video processing or recommendation delivery systems.",
+            ),
+            ExamRound(
+                round_number=4,
+                name="Culture & Stunning Colleagues",
+                format="Executive Culture Evaluation",
+                duration="45 - 60 Minutes",
+                focus_areas=["Netflix Culture Memo: Freedom & Responsibility", "Context Not Control", "High Performance"],
+                description="Probing alignment with Netflix's unique culture of candid feedback and autonomous responsibility.",
+            ),
+        ],
+        "hiring_tips": [
+            "Read Netflix's famous Culture Memo thoroughly before interviewing.",
+            "Demonstrate high autonomy: explain how you make decisions without micromanagement.",
+        ],
+    },
+    "apple": {
+        "company_name": "Apple",
+        "industry": "Consumer Electronics, Operating Systems, Hardware & Cloud Services",
+        "tier": "Tier-1 Tech / FAANG",
+        "headquarters": "Cupertino, CA, USA",
+        "overview": "Global consumer technology leader engineering iPhone, Mac, iOS, macOS, silicon chips, and cloud services.",
+        "tech_stack": ["Swift", "C++", "Objective-C", "Python", "iOS", "macOS", "Systems Programming", "Algorithms", "Data Structures"],
+        "eligibility_criteria": {
+            "fresher": {
+                "degree": "B.Tech/B.E, MS or PhD in Computer Science, Computer Engineering, or EE",
+                "cgpa_min": "7.0+ CGPA preferred",
+                "backlogs": "0 active backlogs",
+                "experience": "0 - 1 Years",
+            },
+            "experienced": {
+                "degree": "Bachelor's / Master's in CS / CE or equivalent",
+                "cgpa_min": "Not applicable",
+                "experience": "2+ Years (ICT3 / ICT4)",
+            },
+        },
+        "coding_expectations": {
+            "dsa_difficulty": "LeetCode Medium to Hard",
+            "primary_topics": ["C/C++ Memory Management", "Data Structures", "Concurrency", "Tree & Graph Algorithms", "Low-Level Optimization"],
+            "platforms": "CoderPad / WebEx",
+            "clean_code_rules": "Pointer safety, cache-friendly data structures, zero memory leaks, elegant API ergonomics",
+        },
+        "project_expectations": {
+            "fresher": [
+                "Native apps (Swift/iOS) or systems programming projects (C/C++, multithreading)",
+                "Deep understanding of Operating Systems, Memory Management, and Hardware-Software interface",
+            ],
+            "experienced": [
+                "Kernel, driver, frameworks, or multi-million user cloud infrastructure",
+                "Low-power optimization, real-time multimedia, or distributed sync protocols",
+            ],
+        },
+        "exam_pattern": [
+            ExamRound(
+                round_number=1,
+                name="Recruiter & Technical Phone Screen",
+                format="1-on-1 Virtual Screening",
+                duration="45 - 60 Minutes",
+                focus_areas=["DSA Coding", "Core CS & Language Internals"],
+                description="Live problem solving in C++, Swift, Python, or Java.",
+            ),
+            ExamRound(
+                round_number=2,
+                name="Technical Round 1 (Algorithms & Data Structures)",
+                format="1-on-1 Live Coding",
+                duration="60 Minutes",
+                focus_areas=["Data Structures", "Pointers & Memory", "Algorithm Optimization"],
+                description="Writing clean, performant code with focus on efficiency.",
+            ),
+            ExamRound(
+                round_number=3,
+                name="Technical Round 2 (Domain & Architecture)",
+                format="System Architecture & Code Defense",
+                duration="60 Minutes",
+                focus_areas=["Frameworks / LLD", "Memory Footprint", "Past Engineering Decisions"],
+                description="Probing architectural depth, threading, and performance bottlenecks.",
+            ),
+            ExamRound(
+                round_number=4,
+                name="Team Collaboration & Apple DNA",
+                format="Leadership Discussion",
+                duration="45 Minutes",
+                focus_areas=["Attention to Detail", "Quality Obsession", "Team Collaboration"],
+                description="Assessing passion for craftsmanship, user experience, and high standards.",
+            ),
+        ],
+        "hiring_tips": [
+            "Apple interviewers obsess over craft, precision, and performance optimization.",
+            "Know your chosen language at memory and pointer level (C++, Swift, or Java).",
+        ],
+    },
 }
 
 
@@ -595,6 +1057,18 @@ def normalize_company_key(name: str) -> str:
         return "microsoft"
     if "amazon" in cleaned or "aws" in cleaned:
         return "amazon"
+    if "zomato" in cleaned:
+        return "zomato"
+    if "swiggy" in cleaned:
+        return "swiggy"
+    if "flipkart" in cleaned:
+        return "flipkart"
+    if "meta" in cleaned or "facebook" in cleaned or cleaned == "fb":
+        return "meta"
+    if "netflix" in cleaned:
+        return "netflix"
+    if "apple" in cleaned:
+        return "apple"
     if "tcs" in cleaned or "tata" in cleaned:
         return "tcs"
     if "infosys" in cleaned or "infy" in cleaned:
@@ -764,7 +1238,62 @@ def get_company_intelligence(
     key = normalize_company_key(company_name)
     is_fresher = experience_type.lower() == "fresher" or years_of_experience < 1.5
 
-    # Check if Groq API is available for live real-time global intelligence
+    # 1. Instant Curated Intelligence (0ms latency, 100% verified data for top global & domestic employers)
+    if key in CURATED_COMPANIES:
+        data = CURATED_COMPANIES[key]
+        exp_key = "fresher" if is_fresher else "experienced"
+
+        eligibility = data["eligibility_criteria"].get(exp_key, data["eligibility_criteria"]["fresher"])
+        project_points = data["project_expectations"].get(exp_key, data["project_expectations"]["fresher"])
+
+        role_title = f"{target_role}" if not is_fresher else f"Junior {target_role} (Campus / New Grad)"
+
+        tech_list = data.get("tech_stack", [])
+        tech_str = ", ".join(tech_list) if tech_list else "Modern Software Stack, Databases, Algorithms"
+
+        # Generate custom JD for this curated company
+        target_jd = f"""
+Company: {data['company_name']}
+Role: {role_title}
+Industry: {data['industry']}
+Target Level: {'Fresher / Entry Level (0-1 Years)' if is_fresher else f'Experienced Professional ({int(years_of_experience)}+ Years)'}
+
+About the Role:
+{data['company_name']} is hiring a {role_title}. You will design, develop, test, and deploy world-class systems with high availability, low latency, and reliability.
+
+Primary Tech Stack & Tools:
+{tech_str}
+
+Key Responsibilities:
+• Build resilient, scalable software components and services using {tech_str}.
+• Solve complex algorithmic challenges and design optimal data structures ({', '.join(data['coding_expectations']['primary_topics'][:4])}).
+• Collaborate with global engineering teams to deliver high-impact product features.
+• Champion clean code, automated testing, version control, and continuous delivery.
+
+Eligibility & Requirements:
+• Degree: {eligibility.get('degree', 'B.Tech/B.E/MCA/MS')}
+• Experience: {eligibility.get('experience', '0-1 Years')}
+• Core Skills: {tech_str}, Data Structures, Algorithms.
+• Strong grasp of Computer Science fundamentals: DBMS, Operating Systems, Computer Networks, and Object-Oriented Design.
+        """.strip()
+
+        return CompanyProfile(
+            company_name=data["company_name"],
+            industry=data["industry"],
+            tier=data["tier"],
+            headquarters=data["headquarters"],
+            overview=data["overview"],
+            target_role=role_title,
+            experience_level_assumed="Fresher / Entry Level" if is_fresher else f"Experienced ({years_of_experience} yrs)",
+            exam_pattern=data["exam_pattern"],
+            eligibility_criteria=eligibility,
+            coding_expectations=data["coding_expectations"],
+            project_expectations=project_points,
+            hiring_tips=data["hiring_tips"],
+            target_job_description=target_jd,
+        )
+
+    # 2. Live Dynamic Discovery via Groq Cloud AI for any other company worldwide
     try:
         from app.services.groq_service import is_groq_available, fetch_company_intelligence_groq
         if is_groq_available():
@@ -775,7 +1304,6 @@ def get_company_intelligence(
                 target_role=target_role,
             )
             if groq_info and isinstance(groq_info, dict):
-                # Map Groq result into CompanyProfile
                 exam_rounds = []
                 for i, r in enumerate(groq_info.get("interview_rounds", [])):
                     exam_rounds.append(
@@ -794,19 +1322,34 @@ def get_company_intelligence(
                     techs = ", ".join(p.get("suggested_tech_stack", []))
                     project_pts.append(f"{p.get('title', 'Project')}: ({p.get('complexity', 'Advanced')}) using [{techs}]. {p.get('why_it_impresses', '')}")
 
-                # Build dynamic JD from Groq info
                 el = groq_info.get("eligibility_criteria", {})
+                tech_stack_items = list(groq_info.get("primary_tech_stack", []))
+                if not tech_stack_items:
+                    for p in groq_info.get("expected_coding_projects", []):
+                        tech_stack_items.extend(p.get("suggested_tech_stack", []))
+                tech_stack_str = ", ".join(list(dict.fromkeys(tech_stack_items))[:8]) if tech_stack_items else "Modern Cloud, Databases, APIs, Algorithms"
+
                 target_jd = f"""
 Company: {groq_info.get('company_name', company_name)}
 Role: {target_role}
 Industry: {groq_info.get('industry', 'Technology')}
 Hiring Bar: {groq_info.get('hiring_bar', 'High')} | Difficulty: {groq_info.get('difficulty_level', 'Hard')}
 
-Eligibility:
+Primary Tech Stack & Tools:
+{tech_stack_str}
+
+Key Responsibilities:
+• Architect, implement, and maintain scalable software features and microservices.
+• Write clean, modular, maintainable code using {tech_stack_str}.
+• Optimize system performance, latency, and data persistence.
+• Collaborate in fast-paced cross-functional engineering teams.
+
+Eligibility & Requirements:
 • Degrees: {', '.join(el.get('degrees_accepted', ['B.Tech/BE/MCA']))}
 • Minimum Marks: {el.get('minimum_cgpa_or_percentage', '60% or 6.5 CGPA')}
 • Experience: {el.get('experience_required', 'Fresher' if is_fresher else f'{years_of_experience} yrs')}
 • Backlogs: {el.get('backlog_policy', 'No active backlogs')}
+• Core Skills: {tech_stack_str}
 
 Key Prerequisites:
 {chr(10).join(['• ' + req for req in el.get('key_prerequisites', [])])}
@@ -844,55 +1387,7 @@ Key Prerequisites:
     except Exception:
         pass
 
-    if key in CURATED_COMPANIES:
-        data = CURATED_COMPANIES[key]
-        exp_key = "fresher" if is_fresher else "experienced"
-
-        eligibility = data["eligibility_criteria"].get(exp_key, data["eligibility_criteria"]["fresher"])
-        project_points = data["project_expectations"].get(exp_key, data["project_expectations"]["fresher"])
-
-        role_title = f"{target_role}" if not is_fresher else f"Junior {target_role} (Campus / New Grad)"
-
-        # Generate custom JD for this curated company
-        target_jd = f"""
-Company: {data['company_name']}
-Role: {role_title}
-Industry: {data['industry']}
-Target Level: {'Fresher / Entry Level (0-1 Years)' if is_fresher else f'Experienced Professional ({int(years_of_experience)}+ Years)'}
-
-About the Role:
-{data['company_name']} is hiring a {role_title}. You will design, build, and deploy world-class systems with high availability and reliability.
-
-Key Responsibilities:
-• Build resilient, scalable software components and services.
-• Solve complex algorithmic challenges and design optimal data structures.
-• Collaborate with global engineering teams to deliver high-impact product features.
-• Champion clean code, automated testing, and continuous delivery.
-
-Eligibility & Requirements:
-• Degree: {eligibility.get('degree', 'B.Tech/B.E/MCA/MS')}
-• Experience: {eligibility.get('experience', '0-1 Years')}
-• Core Skills: Data Structures, Algorithms ({', '.join(data['coding_expectations']['primary_topics'][:4])}), Clean Code.
-• Hands-on experience with modern tech stack, databases, and version control.
-        """.strip()
-
-        return CompanyProfile(
-            company_name=data["company_name"],
-            industry=data["industry"],
-            tier=data["tier"],
-            headquarters=data["headquarters"],
-            overview=data["overview"],
-            target_role=role_title,
-            experience_level_assumed="Fresher / Entry Level" if is_fresher else f"Experienced ({years_of_experience} yrs)",
-            exam_pattern=data["exam_pattern"],
-            eligibility_criteria=eligibility,
-            coding_expectations=data["coding_expectations"],
-            project_expectations=project_points,
-            hiring_tips=data["hiring_tips"],
-            target_job_description=target_jd,
-        )
-
-    # Dynamic Universal Discovery for any other company
+    # 3. Deterministic Local Dynamic Discovery Fallback
     return generate_dynamic_company_profile(
         company_name=company_name,
         experience_type=experience_type,

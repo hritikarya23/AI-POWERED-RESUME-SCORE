@@ -323,7 +323,7 @@ def score_resume(
             years_of_experience=years_of_experience,
             target_role=target_role,
         )
-        if not job_description or len(job_description.strip()) < 20:
+        if not job_description or len(job_description.strip()) < 20 or "target level" in job_description.lower():
             job_description = company_profile.target_job_description
     elif not job_description or len(job_description.strip()) < 20:
         # Fallback to general tech company profile
@@ -459,14 +459,55 @@ def score_resume(
             w_req /= total_w
             w_ats /= total_w
 
-    overall_score = round(
+    raw_overall = (
         (semantic_score * w_sem) +
         (skill_score * w_skl) +
         (req_coverage_score * w_req) +
-        (ats_health_score * w_ats),
-        1
+        (ats_health_score * w_ats)
     )
-    overall_score = max(0.0, min(100.0, overall_score))
+
+    # 6b. Company-Specific Hiring Bar & Tier Calibration
+    company_adjustment = 0.0
+    if company_profile:
+        tier_lower = str(company_profile.tier).lower()
+        overview_lower = str(company_profile.overview).lower()
+        resume_lower = resume_text.lower()
+
+        has_dsa_platform = any(cp in resume_lower for cp in ["leetcode", "codeforces", "codechef", "hackerrank", "geeksforgeeks"])
+        has_distributed_tech = any(k in resume_lower for k in ["distributed", "microservices", "kafka", "redis", "concurrency", "multithreading"])
+        has_devops_cloud = any(k in resume_lower for k in ["docker", "kubernetes", "aws", "gcp", "azure", "ci/cd"])
+        has_web_apis = any(k in resume_lower for k in ["rest api", "restful", "fastapi", "flask", "django", "express", "spring", "react", "node"])
+
+        is_tier1 = any(k in tier_lower for k in ["faang", "tier-1", "tier 1", "extremely high"]) or "extremely high" in overview_lower
+        is_startup = any(k in tier_lower for k in ["startup", "unicorn", "product", "high-growth", "high growth"])
+        is_services = any(k in tier_lower for k in ["services", "consulting", "global it"])
+
+        if is_tier1:
+            # High algorithmic bar: reward DSA/scale, penalize lack of algorithms
+            if has_dsa_platform:
+                company_adjustment += 3.0
+            else:
+                company_adjustment -= 5.0
+            if has_distributed_tech:
+                company_adjustment += 3.0
+            else:
+                company_adjustment -= 4.0
+        elif is_startup:
+            # Startup / Product bar: reward practical APIs, databases, Docker, speed
+            if has_web_apis:
+                company_adjustment += 4.0
+            if has_devops_cloud or has_distributed_tech:
+                company_adjustment += 3.0
+            if "github.com" in resume_lower:
+                company_adjustment += 2.0
+        elif is_services:
+            # IT Services bar: strong credit for degree, core programming fundamentals, and clean ATS layout
+            if any(deg in resume_lower for deg in ["b.tech", "b.e", "bachelor", "computer science", "information technology", "mca"]):
+                company_adjustment += 5.0
+            if ats_health_score >= 70:
+                company_adjustment += 3.0
+
+    overall_score = round(max(5.0, min(99.0, raw_overall + company_adjustment)), 1)
 
     grade, summary = calculate_grade(overall_score)
 

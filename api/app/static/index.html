@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Resume Scorer | Company Intelligence & ATS Optimization</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <div>
+          <h1 class="logo-title">ResumeMatch AI</h1>
+          <p class="logo-subtitle">Company Intelligence • Exam Pattern • Semantic ATS Scorer</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="engine-badge" id="engineStatusBadge">
+          <span class="status-dot"></span>
+          <span id="engineStatusText">SentenceTransformers & OCR Active</span>
+        </div>
+        <a href="/docs" target="_blank" class="api-docs-btn" title="View OpenAPI / Swagger Documentation">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          API Docs
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    <!-- Quick Demo Bar -->
+    <section class="sample-bar-card">
+      <div class="sample-bar-inner">
+        <div class="sample-label">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon>
+          </svg>
+          <span>1-Click Test Drive:</span>
+        </div>
+        <div class="sample-buttons" id="sampleButtonsContainer">
+          <button class="sample-btn" data-role="backend-engineer" data-company="Google">
+            <span class="badge-role">Google</span> Python & Cloud Backend
+          </button>
+          <button class="sample-btn" data-role="ml-engineer" data-company="Amazon">
+            <span class="badge-role">Amazon</span> Machine Learning / AI
+          </button>
+          <button class="sample-btn" data-role="frontend-dev" data-company="TCS">
+            <span class="badge-role">TCS Digital</span> Full-Stack Developer
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Candidate Profile Settings Card -->
+    <section class="profile-settings-card">
+      <div class="profile-settings-grid">
+        <!-- Experience Type -->
+        <div class="setting-item">
+          <label class="setting-label">Candidate Experience Level:</label>
+          <div class="setting-pill-group">
+            <button type="button" class="profile-pill active" id="btnFresher" data-type="fresher">
+              🎓 Fresher (Campus / Entry Level)
+            </button>
+            <button type="button" class="profile-pill" id="btnExperienced" data-type="experienced">
+              💼 Experienced Professional
+            </button>
+          </div>
+        </div>
+
+        <!-- Years of Experience (Shown when experienced) -->
+        <div class="setting-item hidden" id="expYearsContainer">
+          <label class="setting-label">Years of Experience:</label>
+          <div class="years-select-wrap">
+            <select id="yearsSelect" class="form-select">
+              <option value="1">1 - 2 Years (Junior)</option>
+              <option value="3" selected>3 - 5 Years (Mid-Level / SDE-2)</option>
+              <option value="6">6 - 8 Years (Senior / Lead)</option>
+              <option value="10">10+ Years (Principal / Architect)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Target Role -->
+        <div class="setting-item">
+          <label class="setting-label">Target Role / Track:</label>
+          <select id="roleSelect" class="form-select">
+            <option value="Software Engineer" selected>Software Development Engineer (SDE)</option>
+            <option value="Full-Stack Developer">Full-Stack Developer</option>
+            <option value="Backend Engineer">Backend Engineer (Python / Java / Go)</option>
+            <option value="Frontend Developer">Frontend Developer (React / Next.js)</option>
+            <option value="Machine Learning Engineer">Machine Learning / AI Engineer</option>
+            <option value="Cloud / DevOps Engineer">Cloud & DevOps Engineer</option>
+            <option value="Data Engineer">Data Engineer / Analyst</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Input Section: Two Columns -->
+    <div class="input-grid">
+      <!-- Left Column: Resume Input -->
+      <section class="panel-card" id="resumePanel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="step-num">1</span>
+            <div>
+              <h2 class="panel-title">Upload Candidate Resume</h2>
+              <p class="panel-desc">Supports PDF, Word, Plain Text, or <strong>JPG / PNG Image OCR</strong></p>
+            </div>
+          </div>
+          <!-- Mode Tabs -->
+          <div class="tab-pill-group">
+            <button class="tab-pill active" id="tabUpload">Upload File / Image</button>
+            <button class="tab-pill" id="tabPaste">Paste Text</button>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <!-- File Upload View -->
+          <div class="tab-content" id="uploadView">
+            <div class="dropzone" id="dropzone">
+              <input type="file" id="resumeFileInput" accept=".pdf,.docx,.txt,.jpg,.jpeg,.png,.webp,.bmp" class="file-input-hidden">
+              <div class="dropzone-content">
+                <div class="upload-icon-circle">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                </div>
+                <h3 class="dropzone-title">Drag & drop your resume here</h3>
+                <p class="dropzone-subtitle">
+                  Supports <strong>PDF (.pdf)</strong>, <strong>Word (.docx)</strong>, <strong>Image (.jpg, .png)</strong>, or <strong>Text (.txt)</strong>
+                </p>
+                <div class="ocr-badge">
+                  <span>📷 Optical Character Recognition (OCR) enabled for JPG/PNG</span>
+                </div>
+                <button type="button" class="btn-browse" id="btnBrowseFile">Browse File</button>
+              </div>
+            </div>
+
+            <!-- Uploaded File Info Preview Card -->
+            <div class="file-info-card hidden" id="fileInfoCard">
+              <div class="file-info-icon" id="fileIconType">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                  <polyline points="13 2 13 9 20 9"></polyline>
+                </svg>
+              </div>
+              <div class="file-info-details">
+                <span class="file-name" id="previewFileName">resume.pdf</span>
+                <span class="file-meta" id="previewFileMeta">PDF • Extracted 420 words</span>
+              </div>
+              <button type="button" class="btn-remove-file" id="btnRemoveFile" title="Remove file">×</button>
+            </div>
+          </div>
+
+          <!-- Paste Text View -->
+          <div class="tab-content hidden" id="pasteView">
+            <textarea
+              id="resumeTextInput"
+              class="form-textarea"
+              placeholder="Paste candidate resume text here (Summary, Skills, Work Experience/Projects, Education)..."
+              rows="12"
+            ></textarea>
+            <div class="char-count-bar">
+              <span id="resumeWordCount">0 words</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Target Company or Job Description -->
+      <section class="panel-card" id="jdPanel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="step-num">2</span>
+            <div>
+              <h2 class="panel-title">Target Company & Requirements</h2>
+              <p class="panel-desc">Enter only company name for AI Auto-Discovery, or paste custom JD</p>
+            </div>
+          </div>
+          <!-- Mode Tabs for Right Column -->
+          <div class="tab-pill-group">
+            <button class="tab-pill active" id="tabCompanyMode">Company Auto-Discovery</button>
+            <button class="tab-pill" id="tabCustomJd">Custom JD</button>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <!-- View 1: Target Company Auto-Discovery -->
+          <div class="tab-content" id="companyModeView">
+            <div class="company-input-group">
+              <label class="field-label">Type or Select ANY Company in the World:</label>
+              <div class="company-search-box">
+                <input
+                  type="text"
+                  id="targetCompanyInput"
+                  class="form-input"
+                  placeholder="e.g. Google, Microsoft, Amazon, TCS, Infosys, Uber, Goldman Sachs, Zomato..."
+                  value="Google"
+                >
+                <button type="button" class="btn-fetch-intel" id="btnFetchIntel">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  Discover
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Popular Company Badges -->
+            <div class="popular-companies-wrap">
+              <span class="popular-label">Popular Worldwide:</span>
+              <div class="popular-chips" id="popularChipsContainer">
+                <span class="company-chip active" data-name="Google">Google</span>
+                <span class="company-chip" data-name="Microsoft">Microsoft</span>
+                <span class="company-chip" data-name="Amazon">Amazon</span>
+                <span class="company-chip" data-name="TCS">TCS</span>
+                <span class="company-chip" data-name="Infosys">Infosys</span>
+                <span class="company-chip" data-name="Wipro">Wipro</span>
+                <span class="company-chip" data-name="Uber">Uber</span>
+                <span class="company-chip" data-name="Goldman Sachs">Goldman Sachs</span>
+                <span class="company-chip" data-name="Zomato">Zomato</span>
+                <span class="company-chip" data-name="Accenture">Accenture</span>
+                <span class="company-chip" data-name="NVIDIA">NVIDIA</span>
+              </div>
+            </div>
+
+            <!-- Live Company Intel Preview Snippet -->
+            <div class="company-preview-card" id="companyPreviewCard">
+              <div class="preview-header">
+                <div>
+                  <h4 class="preview-company-name" id="previewCompName">Google (Alphabet)</h4>
+                  <span class="preview-company-tier" id="previewCompTier">Tier-1 Tech / FAANG</span>
+                </div>
+                <span class="badge-role" id="previewCompRole">SDE (Campus / New Grad)</span>
+              </div>
+              <div class="preview-stats-grid">
+                <div class="pstat">
+                  <span class="pstat-label">Exam Pattern</span>
+                  <span class="pstat-val" id="previewExamSummary">4 Rounds (OA + 2 Tech + HR)</span>
+                </div>
+                <div class="pstat">
+                  <span class="pstat-label">Eligibility / CGPA</span>
+                  <span class="pstat-val" id="previewCgpa">7.0+ CGPA / No backlogs</span>
+                </div>
+                <div class="pstat">
+                  <span class="pstat-label">Coding Difficulty</span>
+                  <span class="pstat-val" id="previewDsa">LeetCode Medium - Hard</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- View 2: Custom JD Paste View -->
+          <div class="tab-content hidden" id="customJdView">
+            <textarea
+              id="jdTextInput"
+              class="form-textarea"
+              placeholder="Paste specific job posting requirements, tech stack, and duties..."
+              rows="10"
+            ></textarea>
+            <div class="char-count-bar">
+              <span id="jdWordCount">0 words</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="action-bar">
+      <button id="btnScoreResume" class="btn-primary-action">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+        <span>Analyze Resume & Company Roadmap</span>
+      </button>
+    </div>
+
+    <!-- Loading State Indicator -->
+    <div class="loading-state hidden" id="loadingState">
+      <div class="spinner"></div>
+      <h3 class="loading-title">Analyzing Resume & Company Hiring Intelligence</h3>
+      <p class="loading-subtitle" id="loadingSubtitle">
+        Extracting text (OCR/PDF), running Sentence-Transformers semantic matching, auditing ATS metrics, and generating company-specific acceptance roadmap...
+      </p>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-container hidden" id="resultsContainer">
+      <!-- Top Overview Card -->
+      <section class="overview-card">
+        <div class="overview-left">
+          <!-- Circular Score Radial Gauge -->
+          <div class="gauge-container">
+            <svg class="gauge-svg" viewBox="0 0 160 160">
+              <circle class="gauge-bg" cx="80" cy="80" r="68"></circle>
+              <circle class="gauge-progress" id="gaugeProgress" cx="80" cy="80" r="68"></circle>
+            </svg>
+            <div class="gauge-inner">
+              <span class="gauge-score" id="resOverallScore">0</span>
+              <span class="gauge-percent">%</span>
+              <span class="gauge-label">Match Score</span>
+            </div>
+          </div>
+
+          <!-- Grade and Summary -->
+          <div class="overview-meta">
+            <div class="badge-row">
+              <div class="grade-badge" id="resGradeBadge">A (Strong Match)</div>
+              <div class="experience-badge" id="resExpBadge">🎓 Fresher Track</div>
+            </div>
+            <h3 class="overview-summary-title">Executive Evaluation</h3>
+            <p class="overview-summary-text" id="resSummary">Evaluating candidate fit...</p>
+            <div class="report-actions">
+              <button class="btn-secondary" id="btnExportJson">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Export JSON Report
+              </button>
+              <button class="btn-secondary" id="btnPrintReport">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                  <rect x="6" y="14" width="12" height="8"></rect>
+                </svg>
+                Print / Save PDF
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Sub-Scores Metric Bars -->
+        <div class="overview-subscores">
+          <h4 class="subscores-title">Scoring Dimensions</h4>
+
+          <div class="subscore-item">
+            <div class="subscore-header">
+              <span class="subscore-name">Semantic Similarity</span>
+              <span class="subscore-val" id="resSemanticScore">0%</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill fill-purple" id="fillSemantic" style="width: 0%"></div>
+            </div>
+            <span class="subscore-hint">Deep neural contextual alignment via Sentence-Transformers</span>
+          </div>
+
+          <div class="subscore-item">
+            <div class="subscore-header">
+              <span class="subscore-name">Skill & Keyword Overlap</span>
+              <span class="subscore-val" id="resSkillScore">0%</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill fill-emerald" id="fillSkill" style="width: 0%"></div>
+            </div>
+            <span class="subscore-hint">Coverage of hard tech skills, libraries, and tools</span>
+          </div>
+
+          <div class="subscore-item">
+            <div class="subscore-header">
+              <span class="subscore-name">Requirement Coverage</span>
+              <span class="subscore-val" id="resReqScore">0%</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill fill-blue" id="fillReq" style="width: 0%"></div>
+            </div>
+            <span class="subscore-hint">Discrete duty and qualification fulfillment rate</span>
+          </div>
+
+          <div class="subscore-item">
+            <div class="subscore-header">
+              <span class="subscore-name">ATS Readability & Impact</span>
+              <span class="subscore-val" id="resAtsScore">0%</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill fill-amber" id="fillAts" style="width: 0%"></div>
+            </div>
+            <span class="subscore-hint">Section structure, power verbs, and quantified metrics</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW CARD: Target Company Acceptance & Eligibility Roadmap -->
+      <section class="card-section" id="companyRoadmapSection">
+        <div class="card-section-header">
+          <div class="card-title-group">
+            <span class="card-icon icon-gold">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 21h18M3 7v14M21 7v14M6 11h2M6 15h2M16 11h2M16 15h2M10 21V3l4 2v16"></path>
+              </svg>
+            </span>
+            <div>
+              <h3 class="card-title" id="roadmapCompanyTitle">Target Company Hiring Intel & Eligibility Roadmap</h3>
+              <p class="card-subtitle">Exact exam pattern, eligibility requirements, and resume gaps to crack this company</p>
+            </div>
+          </div>
+          <div class="eligibility-status-badge" id="roadmapStatusBadge">Eligible</div>
+        </div>
+
+        <!-- 3-Column Company Intel Grid -->
+        <div class="company-intel-grid">
+          <!-- Column 1: Eligibility Criteria -->
+          <div class="intel-card">
+            <h4 class="intel-card-title text-blue">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Official Eligibility Criteria
+            </h4>
+            <div class="intel-content" id="roadmapEligibilityList"></div>
+          </div>
+
+          <!-- Column 2: Coding & Project Expectations -->
+          <div class="intel-card">
+            <h4 class="intel-card-title text-purple">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              Coding & Project Expectations
+            </h4>
+            <div class="intel-content" id="roadmapExpectationsList"></div>
+          </div>
+
+          <!-- Column 3: Resume Gaps to Address -->
+          <div class="intel-card">
+            <h4 class="intel-card-title text-danger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              Resume Gaps for this Company
+            </h4>
+            <div class="intel-content" id="roadmapGapsList"></div>
+          </div>
+        </div>
+
+        <!-- Exam Pattern Round-by-Round Timeline -->
+        <div class="exam-timeline-wrap">
+          <h4 class="exam-timeline-title">🎯 Exam & Hiring Process Breakdown</h4>
+          <div class="exam-rounds-list" id="examRoundsList"></div>
+        </div>
+
+        <!-- Must-Have Additions for this Company -->
+        <div class="must-have-box">
+          <h4 class="must-have-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+            Must-Have Resume Additions Before Applying:
+          </h4>
+          <div class="must-have-list" id="mustHaveList"></div>
+        </div>
+      </section>
+
+      <!-- Detailed Breakdown Grid -->
+      <div class="details-grid">
+        <!-- Card 1: Skills Analysis (Matched vs Missing) -->
+        <section class="card-section">
+          <div class="card-section-header">
+            <div class="card-title-group">
+              <span class="card-icon icon-green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </span>
+              <div>
+                <h3 class="card-title">Skill & Keyword Match Analysis</h3>
+                <p class="card-subtitle">Exact keywords matched vs missing in relation to company requirements</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-block">
+            <div class="skills-column">
+              <h4 class="skills-col-title text-success">
+                <span>Matched Skills</span>
+                <span class="counter-badge badge-success" id="matchedSkillsCount">0</span>
+              </h4>
+              <div class="skills-tags-wrap" id="matchedSkillsTags"></div>
+            </div>
+
+            <div class="skills-column">
+              <h4 class="skills-col-title text-danger">
+                <span>Missing / Recommended Skills</span>
+                <span class="counter-badge badge-danger" id="missingSkillsCount">0</span>
+              </h4>
+              <div class="skills-tags-wrap" id="missingSkillsTags"></div>
+            </div>
+          </div>
+
+          <!-- Category Breakdown Table -->
+          <div class="category-breakdown-wrap">
+            <h5 class="cat-table-title">Breakdown by Domain Category</h5>
+            <div class="cat-table" id="categoryTableBody"></div>
+          </div>
+        </section>
+
+        <!-- Card 2: Actionable Improvement Tips -->
+        <section class="card-section">
+          <div class="card-section-header">
+            <div class="card-title-group">
+              <span class="card-icon icon-amber">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                </svg>
+              </span>
+              <div>
+                <h3 class="card-title">High-Impact Improvement Tips</h3>
+                <p class="card-subtitle">Prioritized actions to increase your resume ranking and recruiter callback rate</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-list" id="improvementTipsList"></div>
+
+          <!-- Suggested Tailored Bullet Points -->
+          <div class="suggested-bullets-block">
+            <h4 class="suggested-bullets-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              Ready-to-Use Tailored Bullet Point Suggestions (Google XYZ Formula)
+            </h4>
+            <div class="suggested-bullets-list" id="suggestedBulletsList"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Card 3: Requirements Alignment Matrix -->
+      <section class="card-section">
+        <div class="card-section-header">
+          <div class="card-title-group">
+            <span class="card-icon icon-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </span>
+            <div>
+              <h3 class="card-title">Job Requirements Alignment Matrix</h3>
+              <p class="card-subtitle">Semantic matching of each specific requirement to the most relevant resume evidence</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="req-table-container">
+          <table class="req-table">
+            <thead>
+              <tr>
+                <th style="width: 45%;">Job Requirement / Duty</th>
+                <th style="width: 40%;">Best Matching Resume Evidence</th>
+                <th style="width: 15%; text-align: center;">Match Status</th>
+              </tr>
+            </thead>
+            <tbody id="requirementsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Card 4: ATS Health & Formatting Audit -->
+      <section class="card-section">
+        <div class="card-section-header">
+          <div class="card-title-group">
+            <span class="card-icon icon-purple">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="9" y1="9" x2="15" y2="9"></line>
+                <line x1="9" y1="13" x2="15" y2="13"></line>
+                <line x1="9" y1="17" x2="11" y2="17"></line>
+              </svg>
+            </span>
+            <div>
+              <h3 class="card-title">ATS Diagnostic & Structural Audit</h3>
+              <p class="card-subtitle">Applicant Tracking System readability, sections, and quantifiable metrics</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ats-grid">
+          <div class="ats-box">
+            <h4 class="ats-box-title">Sections Detected</h4>
+            <div class="checklist" id="atsSectionsList"></div>
+          </div>
+          <div class="ats-box">
+            <h4 class="ats-box-title">Quantifiable Metrics Detected</h4>
+            <div class="metrics-tags" id="atsMetricsList"></div>
+          </div>
+          <div class="ats-box">
+            <h4 class="ats-box-title">Strong Action Verbs</h4>
+            <div class="verbs-tags" id="atsVerbsList"></div>
+          </div>
+          <div class="ats-box">
+            <h4 class="ats-box-title">Document & Contact Essentials</h4>
+            <div class="contact-checklist" id="atsContactList"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>AI-Powered Resume Scorer • Global Company Intelligence, OCR, and Sentence-Transformers Semantic Matching</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

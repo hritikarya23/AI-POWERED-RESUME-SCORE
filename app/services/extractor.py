@@ -158,12 +158,12 @@ def extract_from_txt(file_bytes: bytes) -> Dict[str, Any]:
 
 def extract_from_image(file_bytes: bytes, filename: str = "resume.jpg") -> Dict[str, Any]:
     """Extract text from an image (JPG, JPEG, PNG, WEBP, BMP) using Groq Vision or local fallback."""
-    # First priority: Fast & accurate Groq Vision if API key is present
+    # First priority: Fast & accurate Groq Vision
     try:
         from app.services.groq_service import is_groq_available, extract_text_from_image_groq
         if is_groq_available():
             text = extract_text_from_image_groq(file_bytes, filename)
-            if text and len(text.strip()) > 15:
+            if text and len(text.strip()) > 10:
                 cleaned = clean_extracted_text(text)
                 words = cleaned.split()
                 return {
@@ -175,14 +175,14 @@ def extract_from_image(file_bytes: bytes, filename: str = "resume.jpg") -> Dict[
     except Exception:
         pass
 
+    # Second priority: Local OCR if easyocr and numpy are available
     try:
-        from PIL import Image
         import numpy as np
+        import easyocr
+        from PIL import Image
 
-        # Lazy OCR initialization
         global _OCR_READER
         if "_OCR_READER" not in globals() or _OCR_READER is None:
-            import easyocr
             _OCR_READER = easyocr.Reader(["en"], gpu=False, verbose=False)
 
         image = Image.open(io.BytesIO(file_bytes))
@@ -206,6 +206,12 @@ def extract_from_image(file_bytes: bytes, filename: str = "resume.jpg") -> Dict[
             "word_count": len(words),
             "char_count": len(cleaned_text),
         }
+    except (ImportError, ModuleNotFoundError):
+        raise ExtractionError(
+            "Could not extract text from this image. "
+            "Please upload your resume in PDF (.pdf), Word (.docx), or plain text (.txt) format, "
+            "or copy and paste your resume text into the text area."
+        )
     except ExtractionError:
         raise
     except Exception as e:
