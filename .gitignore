@@ -69,4 +69,6 @@ Desktop.ini
 .env.local
 .env.*.local
 !.env.example
-
+# Video and media files
+video/
+*.mp4

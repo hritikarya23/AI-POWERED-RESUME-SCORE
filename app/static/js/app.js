@@ -1,10 +1,159 @@
 /**
- * AI-Powered Resume Scorer - Interactive Client Application
- * Features: Multi-format OCR (JPG/PNG/PDF), Universal Company Intelligence,
- * Candidate Experience Level Modeling (Fresher vs Experienced), and Roadmap Generation.
+ * 3D Particle Wave Engine (Matching Reference Video Aesthetic)
+ * High performance, battery efficient, mouse parallax reactive, 60fps canvas wave
  */
+class ParticleWave {
+  constructor(canvas) {
+    if (!canvas) return;
+    this.canvas = canvas;
+    this.ctx = canvas.getContext("2d");
+    if (!this.ctx) return;
+
+    this.cols = 85;
+    this.rows = 48;
+    this.spacingX = 36;
+    this.spacingZ = 24;
+    this.fov = 420;
+    this.pitch = 0.44;
+    this.cosPitch = Math.cos(this.pitch);
+    this.sinPitch = Math.sin(this.pitch);
+
+    this.time = 0;
+    this.mouseX = 0;
+    this.mouseY = 0;
+    this.targetMouseX = 0;
+    this.targetMouseY = 0;
+    this.isTabVisible = true;
+    this.animationFrameId = null;
+
+    this.handleResize = this.handleResize.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
+    this.render = this.render.bind(this);
+
+    this.init();
+  }
+
+  init() {
+    this.handleResize();
+    window.addEventListener("resize", this.handleResize, { passive: true });
+    window.addEventListener("mousemove", this.handleMouseMove, { passive: true });
+    document.addEventListener("visibilitychange", this.handleVisibilityChange);
+
+    this.render();
+  }
+
+  handleResize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+    this.canvas.width = this.width * dpr;
+    this.canvas.height = this.height * dpr;
+    this.canvas.style.width = `${this.width}px`;
+    this.canvas.style.height = `${this.height}px`;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    if (this.width < 768) {
+      this.cols = 45;
+      this.rows = 35;
+      this.spacingX = 26;
+      this.spacingZ = 20;
+    } else {
+      this.cols = 85;
+      this.rows = 48;
+      this.spacingX = 36;
+      this.spacingZ = 24;
+    }
+  }
+
+  handleMouseMove(e) {
+    this.targetMouseX = (e.clientX / this.width - 0.5) * 50;
+    this.targetMouseY = (e.clientY / this.height - 0.5) * 35;
+  }
+
+  handleVisibilityChange() {
+    this.isTabVisible = !document.hidden;
+    if (this.isTabVisible && !this.animationFrameId) {
+      this.render();
+    }
+  }
+
+  render() {
+    if (!this.isTabVisible) {
+      this.animationFrameId = null;
+      return;
+    }
+
+    this.time += 0.016;
+
+    this.mouseX += (this.targetMouseX - this.mouseX) * 0.05;
+    this.mouseY += (this.targetMouseY - this.mouseY) * 0.05;
+
+    this.ctx.clearRect(0, 0, this.width, this.height);
+
+    const centerX = this.width * 0.5 + this.mouseX;
+    const centerY = this.height * 0.52 + this.mouseY;
+
+    const particles = [];
+    const rows = this.rows;
+    const cols = this.cols;
+    const spacingX = this.spacingX;
+    const spacingZ = this.spacingZ;
+    const cosP = this.cosPitch;
+    const sinP = this.sinPitch;
+    const fov = this.fov;
+    const time = this.time;
+
+    for (let r = 0; r < rows; r++) {
+      const z = (r - rows / 2) * spacingZ;
+      for (let c = 0; c < cols; c++) {
+        const x = (c - cols / 2) * spacingX;
+
+        const y =
+          Math.sin(x * 0.0035 + time * 1.1) * 55 +
+          Math.cos(z * 0.0052 + time * 0.85) * 42 +
+          Math.sin((x + z) * 0.0028 + time * 1.35) * 28;
+
+        const yRot = y * cosP - z * sinP;
+        const zRot = y * sinP + z * cosP;
+
+        const depth = zRot + 500;
+        if (depth > 60) {
+          const scale = fov / depth;
+          const projX = centerX + x * scale;
+          const projY = centerY + yRot * scale;
+
+          if (projX >= -20 && projX <= this.width + 20 && projY >= -20 && projY <= this.height + 20) {
+            const rad = Math.max(0.6, 2.3 * scale);
+            const alpha = Math.min(1.0, Math.max(0.08, 0.15 + 0.85 * scale));
+            particles.push({ depth, x: projX, y: projY, rad, alpha });
+          }
+        }
+      }
+    }
+
+    particles.sort((a, b) => b.depth - a.depth);
+
+    const ctx = this.ctx;
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha.toFixed(3)})`;
+      ctx.fill();
+    }
+
+    this.animationFrameId = requestAnimationFrame(this.render);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize 3D Particle Wave Backdrop
+  const canvasEl = document.getElementById("particleCanvas");
+  if (canvasEl) {
+    new ParticleWave(canvasEl);
+  }
+
   // Application State
   let currentFile = null;
   let extractedFileText = "";
