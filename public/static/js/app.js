@@ -345,14 +345,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
       extractedFileText = data.text;
-      const fileTypeLabel = isImage ? "IMAGE OCR" : data.filename.split(".").pop().toUpperCase();
+      const fileTypeLabel = isImage ? "AI VISION OCR" : data.filename.split(".").pop().toUpperCase();
       previewFileMeta.textContent = `${fileTypeLabel} • ${data.page_count} page • ${data.word_count.toLocaleString()} words extracted`;
 
       // Update text input in sync
       resumeTextInput.value = data.text;
       updateWordCount(resumeTextInput, resumeWordCount);
     } catch (e) {
-      alert(`Text Extraction Error: ${e.message}`);
+      // If it is an image and cloud OCR failed or was rate-limited, fallback to browser Tesseract.js
+      if (isImage && typeof Tesseract !== "undefined") {
+        try {
+          previewFileMeta.textContent = "Cloud AI busy — running local in-browser OCR (Tesseract)...";
+          const ret = await Tesseract.recognize(file, "eng", {
+            logger: (m) => {
+              if (m && m.status === "recognizing text" && typeof m.progress === "number") {
+                previewFileMeta.textContent = `Browser OCR in progress (${Math.round(m.progress * 100)}%)...`;
+              }
+            },
+          });
+          const browserText = (ret && ret.data && ret.data.text) ? ret.data.text.trim() : "";
+          if (browserText.length > 20) {
+            extractedFileText = browserText;
+            resumeTextInput.value = browserText;
+            updateWordCount(resumeTextInput, resumeWordCount);
+            const words = browserText.split(/\s+/).length;
+            previewFileMeta.textContent = `BROWSER OCR • 1 page • ${words.toLocaleString()} words extracted`;
+            return;
+          }
+        } catch (tessErr) {
+          console.warn("Client-side Tesseract OCR error:", tessErr);
+        }
+      }
+
+      alert(`Text Extraction Notice: ${e.message}`);
       clearUploadedFile();
     }
   }
@@ -419,11 +444,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const scoreCompany = isCompanyMode ? targetComp : null;
     const scoreJd = isCompanyMode ? null : customJd;
 
+    const availableText = extractedFileText || pastedText || resumeTextInput.value.trim();
+
     try {
       let responseData;
 
-      if (hasFile && tabUpload.classList.contains("active")) {
-        // Multipart Upload
+      if (availableText && availableText.length >= 20) {
+        // Direct JSON scoring using already-extracted text (fast, 0 duplicate OCR token cost)
+        const res = await fetch("/api/score", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            resume_text: availableText,
+            target_company: scoreCompany,
+            job_description: scoreJd,
+            experience_type: currentExperienceType,
+            years_of_experience: years,
+            target_role: targetRole,
+          }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || "Scoring failed");
+        }
+        responseData = await res.json();
+      } else if (hasFile && tabUpload.classList.contains("active")) {
+        // Fallback Multipart Upload only if text wasn't extracted yet
         const formData = new FormData();
         formData.append("resume_file", currentFile);
         if (scoreCompany) formData.append("target_company", scoreCompany);
@@ -435,27 +482,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch("/api/score-upload", {
           method: "POST",
           body: formData,
-        });
-
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.detail || "Scoring failed");
-        }
-        responseData = await res.json();
-      } else {
-        // JSON Payload
-        const textToScore = pastedText || extractedFileText;
-        const res = await fetch("/api/score", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            resume_text: textToScore,
-            target_company: scoreCompany,
-            job_description: scoreJd,
-            experience_type: currentExperienceType,
-            years_of_experience: years,
-            target_role: targetRole,
-          }),
         });
 
         if (!res.ok) {

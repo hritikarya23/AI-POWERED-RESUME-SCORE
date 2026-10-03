@@ -159,9 +159,11 @@ def extract_from_txt(file_bytes: bytes) -> Dict[str, Any]:
 def extract_from_image(file_bytes: bytes, filename: str = "resume.jpg") -> Dict[str, Any]:
     """Extract text from an image (JPG, JPEG, PNG, WEBP, BMP) using Groq Vision or local fallback."""
     # First priority: Fast & accurate Groq Vision
+    groq_attempted = False
     try:
         from app.services.groq_service import is_groq_available, extract_text_from_image_groq
         if is_groq_available():
+            groq_attempted = True
             text = extract_text_from_image_groq(file_bytes, filename)
             if text and len(text.strip()) > 10:
                 cleaned = clean_extracted_text(text)
@@ -172,8 +174,8 @@ def extract_from_image(file_bytes: bytes, filename: str = "resume.jpg") -> Dict[
                     "word_count": len(words),
                     "char_count": len(cleaned),
                 }
-    except Exception:
-        pass
+    except Exception as e:
+        logger.warning("Groq Vision exception in extractor: %s", e)
 
     # Second priority: Local OCR if easyocr and numpy are available
     try:
@@ -207,6 +209,11 @@ def extract_from_image(file_bytes: bytes, filename: str = "resume.jpg") -> Dict[
             "char_count": len(cleaned_text),
         }
     except (ImportError, ModuleNotFoundError):
+        if groq_attempted:
+            raise ExtractionError(
+                "Cloud AI OCR is temporarily busy (rate limit reached on free tier). "
+                "Please wait 10-20 seconds and try again, or upload your resume in PDF (.pdf) or Word (.docx) format."
+            )
         raise ExtractionError(
             "Could not extract text from this image. "
             "Please upload your resume in PDF (.pdf), Word (.docx), or plain text (.txt) format, "

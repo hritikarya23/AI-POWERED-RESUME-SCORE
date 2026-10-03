@@ -11,6 +11,7 @@ import json
 import logging
 import os
 import re
+import time
 from typing import Any, Dict, List, Optional
 import httpx
 
@@ -225,18 +226,18 @@ def extract_text_from_image_groq(image_bytes: bytes, filename: str) -> Optional[
     if not api_key:
         return None
 
-    # Pre-process & downscale image with Pillow to ensure lightweight payload (<300KB)
+    # Pre-process & downscale image with Pillow to ensure lightweight payload (<200KB)
     try:
         import io
         from PIL import Image
         img = Image.open(io.BytesIO(image_bytes))
         if img.mode != "RGB":
             img = img.convert("RGB")
-        max_dim = 1600
+        max_dim = 1000
         if img.width > max_dim or img.height > max_dim:
             img.thumbnail((max_dim, max_dim), Image.Resampling.LANCZOS)
         buf = io.BytesIO()
-        img.save(buf, format="JPEG", quality=85, optimize=True)
+        img.save(buf, format="JPEG", quality=80, optimize=True)
         compressed_bytes = buf.getvalue()
         mime_type = "image/jpeg"
     except Exception as e:
@@ -281,15 +282,27 @@ def extract_text_from_image_groq(image_bytes: bytes, filename: str) -> Optional[
         "max_tokens": 800,
     }
 
-    try:
-        with httpx.Client(timeout=25.0) as client:
-            resp = client.post(GROQ_API_URL, headers=headers, json=payload)
-            if resp.status_code == 200:
-                data = resp.json()
-                return data["choices"][0]["message"]["content"].strip()
-            else:
-                logger.error("Groq Vision error %d: %s", resp.status_code, resp.text[:200])
-                return None
-    except Exception as e:
-        logger.error("Failed to run Groq Vision extraction: %s", e)
-        return None
+    for attempt in range(2):
+        try:
+            with httpx.Client(timeout=18.0) as client:
+                resp = client.post(GROQ_API_URL, headers=headers, json=payload)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    return data["choices"][0]["message"]["content"].strip()
+                elif resp.status_code == 429:
+                    logger.warning("Groq Vision 429 rate limit (attempt %d/2). Waiting 3s...", attempt + 1)
+                    if attempt < 1:
+                        time.sleep(3.0)
+                        continue
+                    else:
+                        logger.error("Groq Vision 429 limit exceeded: %s", resp.text[:200])
+                        return None
+                else:
+                    logger.error("Groq Vision error %d: %s", resp.status_code, resp.text[:200])
+                    return None
+        except Exception as e:
+            logger.error("Failed to run Groq Vision extraction (attempt %d): %s", attempt + 1, e)
+            if attempt < 1:
+                time.sleep(2.0)
+                continue
+            return None
