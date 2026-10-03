@@ -516,8 +516,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const isFresher = data.experience_type === "fresher" || data.years_of_experience < 1.5;
     resExpBadge.textContent = isFresher
-      ? "🎓 Fresher Track"
-      : `💼 ${Math.round(data.years_of_experience)}+ Yrs Exp Track`;
+      ? "Fresher Track"
+      : `${Math.round(data.years_of_experience)}+ Yrs Exp Track`;
 
     resSummary.textContent = data.summary;
 
@@ -584,18 +584,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (score >= 80) gaugeProgress.style.stroke = "#10b981";
     else if (score >= 65) gaugeProgress.style.stroke = "#3b82f6";
     else if (score >= 50) gaugeProgress.style.stroke = "#f59e0b";
-    else gaugeProgress.style.stroke = "#ef4444";
+    else gaugeProgress.style.stroke = "#f43f5e";
 
-    let current = 0;
-    const stepTime = Math.max(10, Math.floor(1000 / (score || 1)));
-    const timer = setInterval(() => {
-      current += 1;
+    const duration = 750;
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(1, elapsed / duration);
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = Math.round(score * ease);
       resOverallScore.textContent = current;
-      if (current >= score) {
-        clearInterval(timer);
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
         resOverallScore.textContent = score;
       }
-    }, stepTime);
+    }
+    requestAnimationFrame(tick);
   }
 
   function applyGradeStyle(grade, elem) {
