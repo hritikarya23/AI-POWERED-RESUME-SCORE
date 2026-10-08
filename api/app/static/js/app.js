@@ -125,7 +125,7 @@ class ParticleWave {
 
           if (projX >= -20 && projX <= this.width + 20 && projY >= -20 && projY <= this.height + 20) {
             const rad = Math.max(0.6, 2.3 * scale);
-            const alpha = Math.min(1.0, Math.max(0.08, 0.15 + 0.85 * scale));
+            const alpha = Math.min(0.24, Math.max(0.02, 0.04 + 0.18 * scale));
             particles.push({ depth, x: projX, y: projY, rad, alpha });
           }
         }
@@ -1004,6 +1004,81 @@ document.addEventListener("DOMContentLoaded", () => {
   btnPrintReport.addEventListener("click", () => {
     window.print();
   });
+
+  // 11. Theme Toggle (Dark / Light Mode)
+  const themeToggleBtn = document.getElementById("themeToggleBtn");
+  const savedTheme = localStorage.getItem("rm_theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "dark";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("rm_theme", next);
+    });
+  }
+
+  // 12. Sign In Modal
+  const openSignInBtn = document.getElementById("openSignInBtn");
+  const closeSignInModal = document.getElementById("closeSignInModal");
+  const signInModal = document.getElementById("signInModal");
+
+  if (openSignInBtn && signInModal) {
+    openSignInBtn.addEventListener("click", () => {
+      signInModal.classList.add("open");
+    });
+  }
+  if (closeSignInModal && signInModal) {
+    closeSignInModal.addEventListener("click", () => {
+      signInModal.classList.remove("open");
+    });
+  }
+  if (signInModal) {
+    signInModal.addEventListener("click", (e) => {
+      if (e.target === signInModal) {
+        signInModal.classList.remove("open");
+      }
+    });
+  }
+
+  // 13. Mobile Menu Drawer
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileNavDrawer = document.getElementById("mobileNavDrawer");
+  if (mobileMenuBtn && mobileNavDrawer) {
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileNavDrawer.classList.toggle("open");
+    });
+    mobileNavDrawer.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileNavDrawer.classList.remove("open");
+      });
+    });
+  }
+
+  // 14. FAQ Accordion Toggle
+  document.querySelectorAll(".faq-header").forEach((header) => {
+    header.addEventListener("click", () => {
+      const item = header.closest(".faq-item");
+      if (!item) return;
+      const isActive = item.classList.contains("active");
+      document.querySelectorAll(".faq-item").forEach((f) => f.classList.remove("active"));
+      if (!isActive) {
+        item.classList.add("active");
+      }
+    });
+  });
+
+  // 15. View Sample Report Trigger
+  const btnLoadSampleDemo = document.getElementById("btnLoadSampleDemo");
+  if (btnLoadSampleDemo && sampleButtonsContainer) {
+    btnLoadSampleDemo.addEventListener("click", () => {
+      const firstSample = sampleButtonsContainer.querySelector(".sample-btn");
+      if (firstSample) {
+        firstSample.click();
+      }
+    });
+  }
 
   // Utilities
   function escapeHtml(str) {
