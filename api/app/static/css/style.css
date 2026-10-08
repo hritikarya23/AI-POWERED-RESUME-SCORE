@@ -154,25 +154,75 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.logo-group:hover {
+  text-decoration: none;
 }
 
 .logo-icon {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), #0e111a;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.55);
+  position: relative;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.logo-group:hover .logo-icon {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+.logo-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .logo-title {
-  font-size: 1rem;
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #ffffff;
+  letter-spacing: -0.028em;
+  color: #f8fafc;
+  display: inline-flex;
+  align-items: center;
+}
+
+.logo-title-accent {
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  margin-left: 1px;
+}
+
+.logo-badge {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.48rem;
+  border-radius: 9999px;
+  background: rgba(99, 102, 241, 0.12);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.32);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  backdrop-filter: blur(8px);
 }
 
 .nav-links {
@@ -1875,20 +1925,41 @@ body {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  font-weight: 700;
-  font-size: 0.92rem;
-  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footer-logo:hover {
+  text-decoration: none;
+}
+
+.footer-logo .logo-title {
+  font-size: 0.95rem;
+}
+
+.footer-logo .logo-badge {
+  font-size: 0.58rem;
+  padding: 0.14rem 0.4rem;
 }
 
 .logo-icon-small {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), #0e111a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: #94a3b8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.footer-logo:hover .logo-icon-small {
+  border-color: rgba(99, 102, 241, 0.4);
+  color: #c084fc;
 }
 
 .footer-links {
